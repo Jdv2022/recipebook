@@ -15,14 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Mains;
 use App\Http\Controllers\Users;
+use App\Http\Controllers\Recipes;
 
 /* 
 | Docu: Mains controller for views return
 */
 Route::get('/', [Mains::class, 'index'])->name('Main.index');
+Route::get('/create/recipe', [Mains::class, 'recipeUserInput'])->name('Main.recipeUserInput');
 
 /* 
-| Docu: Users model for user related process
+| Docu: Users controller for user related process
 */
 Route::post('/register/user', [Users::class, 'registerUser'])->name('Users.registerUser');
 Route::post('/login/user', [Users::class, 'loginUser'])->name('Users.loginUser');
+Route::get('/logout/user', [Users::class, 'logoutUser'])->name('Users.logoutUser');
+
+/* 
+| Docu: Recipes controller for recipes related process
+*/
+Route::post('/create/new/recipe', [Recipes::class, 'createRecipes'])->name('Recipes.createRecipes');

@@ -10,5 +10,9 @@ class Mains extends Controller{
     public function index(){
         return view('index');
     }
+
+    public function recipeUserInput(){
+        return view('createRecipe');
+    }
     
 }

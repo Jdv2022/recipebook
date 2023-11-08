@@ -16,6 +16,7 @@ class User extends Authenticatable{
             'last_name' => 'required|min:2',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
+            'profile_picture' => 'required|file|mimes:jpeg,png,jpg',
         ];
     }
 

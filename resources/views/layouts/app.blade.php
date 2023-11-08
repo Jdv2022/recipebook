@@ -27,8 +27,8 @@
                 <a class="btn btn-light log-in" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
                 @else
                 <a class="btn btn-light log-in" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 @endif
-                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 </div>
             </div>
         </nav>
@@ -38,13 +38,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Registration</h1>
-                        @if (session('register_error'))
-                            <span class="text-danger m-0 custom-small">{{ session('register_error') }}</span>
-                        @endif
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('Users.registerUser') }}" method="POST" id="register-form">
+                        @if (session('register_error'))
+                            <span class="text-danger m-0 custom-small">{{ session('register_error') }}</span>
+                        @endif
+                            <form action="{{ route('Users.registerUser') }}" method="POST" id="register-form" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="hidden" value="register-modal">
                                 <div class="mb-3">
@@ -72,6 +72,13 @@
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}">
                                 @error('password')
+                                    <span class="text-danger m-0 custom-small">{{ $message }}</span>
+                                @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFileSm" class="form-label">Upload profile picture</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="profile_picture">
+                                @error('profile_picture')
                                     <span class="text-danger m-0 custom-small">{{ $message }}</span>
                                 @enderror
                                 </div>
@@ -132,8 +139,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yes</button>
-                            <button type="submit" class="btn btn-primary" id="submit-login">No</button>
+                            <a href="{{ route('Users.logoutUser') }}" type="button" class="btn btn-secondary" id="submit-login">Yes</a>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
