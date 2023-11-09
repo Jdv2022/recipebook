@@ -14,9 +14,23 @@
         .custom-small{
             font-size: .8rem;
         }
+        .custom-container-height{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .custom-nav-color{
+            background-color: orange;
+        }
+        #custom-background-1{
+            background-image: url("{{ asset('img/bg1.png') }}");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
     </style>
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-expand-lg position-sticky top-0 sticky-top custom-nav-color">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Recipe Book</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,15 +38,18 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 @if (auth()->check())
-                <a class="btn btn-light log-in" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
+                    <a class="btn btn-dark log-in custom-nav-color" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
                 @else
-                <a class="btn btn-light log-in" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
-                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
+                    <a class="btn btn-dark log-in custom-nav-color" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 @endif
                 </div>
             </div>
         </nav>
         <main>
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" class="border border-primary">
+            <polygon points="50,10 61.8,37.6 90,37.6 66.2,54.4 78.4,81 50,64.2 21.6,81 33.8,54.4 10,37.6 38.2,37.6" fill="orange" stroke="black" stroke-width="3px" />
+        </svg> -->
             <div class="modal fade" id="registration-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
@@ -72,13 +89,6 @@
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}">
                                 @error('password')
-                                    <span class="text-danger m-0 custom-small">{{ $message }}</span>
-                                @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFileSm" class="form-label">Upload profile picture</label>
-                                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="profile_picture">
-                                @error('profile_picture')
                                     <span class="text-danger m-0 custom-small">{{ $message }}</span>
                                 @enderror
                                 </div>
@@ -138,9 +148,9 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to log out?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <a href="{{ route('Users.logoutUser') }}" type="button" class="btn btn-secondary" id="submit-login">Yes</a>
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                        <div class="modal-body row">
+                            <a href="{{ route('Users.logoutUser') }}" type="button" class="btn btn-secondary col-5 m-auto" id="submit-login">Yes</a>
+                            <button type="submit" class="btn btn-primary col-5 m-auto" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>

@@ -21,7 +21,7 @@ use App\Http\Controllers\Recipes;
 | Docu: Mains controller for views return
 */
 Route::get('/', [Mains::class, 'index'])->name('Main.index');
-Route::get('/create/recipe', [Mains::class, 'recipeUserInput'])->name('Main.recipeUserInput');
+Route::get('/create/recipe', [Mains::class, 'recipeUserInput'])->name('Main.recipeUserInput')->middleware('auth');
 
 /* 
 | Docu: Users controller for user related process

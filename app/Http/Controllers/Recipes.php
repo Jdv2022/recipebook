@@ -14,14 +14,14 @@ class Recipes extends Controller{
         $model = new Recipe;
         $validate = $request->validate($model->recipeValidations());
         $uploadedFile = $request->file('food_picture');
-        $path = $uploadedFile->store('public/user');
+        $uploadedFile->store('public/user');
 
         $model->user_id = Auth::id();
         $model->title = $request->input('title');
         $model->description = $request->input('description');
         $model->list_of_ingredients = $request->input('list_of_ingredients');
         $model->instructions = $request->input('instructions');
-        $model->url = $path;
+        $model->url = 'storage/user/' . $uploadedFile->hashName();
 
         if($model->save()){
             dd('Saved!');
