@@ -1,0 +1,90 @@
+.log-in{
+    margin-right: 30px;
+}
+.custom-small{
+    font-size: .8rem;
+}
+.custom-minvh-100{
+    min-height: 100vh;
+}
+.custom-container-height{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.custom-nav-color{
+    background-color: orange;
+}
+.custom-nuetral-bg-color{
+    background-color: #D1EFEB;
+}
+#custom-background-1{
+    background-image: url("http://localhost:8000/img/bg1.png");
+}
+#custom-background-2{
+    background-image: url("http://localhost:8000/img/bg2.png");
+}
+#custom-background-3{
+    background-image: url("http://localhost:8000/img/bg3.png");
+}
+.common_img{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-position: center;
+}
+.img_default{
+    border-radius: 10px;
+    border: 2px solid black;
+}
+.custom-bg2-bgcolor-inner{
+    border-bottom: 5px solid orange;
+}
+.featured-dish{
+    height: 100%;
+}
+.custom-reviews{
+    font-size: 1.5rem;
+}
+.custom-review-section{
+    font-size: 1rem;
+    font-weight: normal;
+    text-align: left;
+    padding-right: 20px;
+}
+.comment-container{
+    border-left: 3px solid orange;
+    padding-left: 10px;
+    margin: 10px 0;
+    text-align: left;
+}
+.custom-chatbox, .custom-chatbox-reply{
+    padding: 5px 10px;
+    background-color: rgba(255, 166, 0, 0.467);
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    border-radius: 11px;
+}
+.custom-reply{
+    font-size: .8rem;
+    text-decoration: none;
+    color: grey;
+    text-align: left;
+}
+.custom-chatbox-reply{
+    background-color: rgba(80, 217, 217, 0.436);
+}
+.custom-comment-input{
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+}
+.custom-reviewcontainer{
+    height: 350px;
+    overflow: auto;
+}
+footer{
+    background-color: rgb(46, 29, 16);
+    color: white;
+}

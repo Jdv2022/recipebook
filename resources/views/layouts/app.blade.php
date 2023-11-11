@@ -6,29 +6,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
-    <style>
-        .log-in{
-            margin-right: 30px;
-        }
-        .custom-small{
-            font-size: .8rem;
-        }
-        .custom-container-height{
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-        .custom-nav-color{
-            background-color: orange;
-        }
-        #custom-background-1{
-            background-image: url("{{ asset('img/bg1.png') }}");
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-    </style>
     <body>
         <nav class="navbar navbar-expand-lg position-sticky top-0 sticky-top custom-nav-color">
             <div class="container-fluid">
@@ -37,11 +17,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <a class="btn btn-dark log-in custom-nav-color border border-0" href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
                 @if (auth()->check())
-                    <a class="btn btn-dark log-in custom-nav-color" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
+                    <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
                 @else
-                    <a class="btn btn-dark log-in custom-nav-color" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
-                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
+                    <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 @endif
                 </div>
             </div>
@@ -128,7 +109,7 @@
                                 <div class="mb-3">
                                     <label for="password-login" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password-login" name="password" value="{{ old('password') }}">
-                                 @error('password')
+                                @error('password')
                                     <span class="text-danger m-0 custom-small">{{ $message }}</span>
                                 @enderror
                                 </div>
@@ -157,8 +138,15 @@
             </div>
             @yield('content')
         </main>
+        <footer class="container-fluid text-center">
+            <p class="m-0">© 2023 Project | johnden</p>
+            <p class="m-0">Made with Bootstrap(UI) and Laravel(Fullstack)</p>
+        </footer>
     </body>
     <script>
+        /* 
+        |   Docu: Home page form submission and modal loading
+        */
         $("#submit-registration").click(function() {
             $('#register-form').submit();
         });
@@ -178,5 +166,49 @@
                 $('#login-modal').modal('show');
             });
         @endif
+        /* 
+        |   Docu: AJAX for comment and replies section
+        */
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('Ajax.review') }}", 
+                success: function(response) {
+                    $('#comments-container').html(response);
+                },
+            });
+        });
+        $('#comments-form').submit(function(e) {
+            e.preventDefault(); 
+            const formData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('Comments.create') }}", 
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                success: function(response) {
+                    $('#comment-input').val('');
+                    $('#comments-container').html(response);
+                },
+            });
+        });
+        $('#comments-container').on('submit','#reply-form',function(e) {
+            e.preventDefault(); 
+            const formData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('Replies.create') }}", 
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                success: function(response) {
+                    $('#comment-reply').val('');
+                    $('#comments-container').html(response);
+                },
+            });
+        });
     </script>
 </html>

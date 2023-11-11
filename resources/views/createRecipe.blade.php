@@ -3,7 +3,7 @@
 @section('title', 'Recipe Book')
 
 @section('content')
-<div class="container-sm">
+<div class="container-sm mt-3 vh-100">
     <form action="{{ route('Recipes.createRecipes') }}" method="POST" id="register-form" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="hidden" value="register-recipe">

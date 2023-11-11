@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\UserAdditionalDetails;
+
 class User extends Authenticatable{
     use HasFactory;
 
@@ -25,6 +27,10 @@ class User extends Authenticatable{
             'email' => 'required',
             'password' => 'required|min:8',
         ];
+    }
+
+    public function moreUserInfo(){
+        return $this->hasone(UserAdditionalDetails::class);
     }
 
 }

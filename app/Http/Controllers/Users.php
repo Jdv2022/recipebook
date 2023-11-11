@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\User;
+
 /* 
 | Docu: handles all users processes (validation, insert and Auth)
 */
 class Users extends Controller{
-    
+    /* 
+    |   Docu: For user validation and creation. 
+    */
     public function registerUser(Request $request){
         $model = new User;
         $validation = $request->validate($model->registrationValidation());
@@ -27,7 +29,9 @@ class Users extends Controller{
         }
         return redirect()->back()->with('register_error', 'System busy, please try again later')->withInput();
     }
-    
+    /* 
+    |   Docu: User login validation and auth
+    */
     public function loginUser(Request $request){
         $model = new User;
         $validation = $request->validate($model->loginValidation());
@@ -37,9 +41,9 @@ class Users extends Controller{
         if(Auth::attempt($credentials)){
             return redirect()->back();
         }
-        return redirect()->back()->with('login-error', "System busy, please try again later");
+        return redirect()->back()->with('login-error', "Incorrect credentials");
     }
-
+    
     public function logoutUser(){
         Auth::logout();
         return redirect()->route('Main.index');
