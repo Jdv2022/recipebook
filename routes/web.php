@@ -48,7 +48,14 @@ use App\Http\Controllers\Replies;
 Route::post('/comment/reply', [Replies::class, 'create'])->name('Replies.create');
 
 /* 
+| Docu: Rating controller
+*/
+use App\Http\Controllers\Ratings;
+Route::post('/rating/create', [Ratings::class, 'create'])->name('Ratings.create');
+
+/* 
 |   Docu: For Ajax function
 */
 use App\Http\Controllers\Ajax;
 Route::get('/ajax/request/review', [Ajax::class, 'review'])->name('Ajax.review');
+Route::get('/ajax/request/rating', [Ajax::class, 'rating'])->name('Ajax.rating');

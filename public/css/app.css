@@ -1,3 +1,13 @@
+*{
+    user-select: none;
+}
+body{
+    background-color: #F5F7F8;
+}
+.violet{
+    font-weight: bold;
+    color: rgb(149, 67, 149);
+}
 .log-in{
     margin-right: 30px;
 }
@@ -11,6 +21,9 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+}
+.custom-bold{
+    font-weight: bold;
 }
 .custom-nav-color{
     background-color: orange;
@@ -84,7 +97,16 @@
     height: 350px;
     overflow: auto;
 }
+.custom-border-top-reviews{
+    border-top: 7px solid rgba(0, 0, 255, 0.177);
+}
 footer{
     background-color: rgb(46, 29, 16);
     color: white;
+}
+/* 
+| Star rating
+*/
+.star:hover{
+    background-color: orange;
 }

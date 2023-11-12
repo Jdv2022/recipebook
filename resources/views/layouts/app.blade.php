@@ -12,7 +12,7 @@
     <body>
         <nav class="navbar navbar-expand-lg position-sticky top-0 sticky-top custom-nav-color">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Recipe Book</a>
+                <a class="navbar-brand" href="{{ route('Main.index') }}">Recipe Book</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -169,14 +169,12 @@
         /* 
         |   Docu: AJAX for comment and replies section
         */
-        $(document).ready(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('Ajax.review') }}", 
-                success: function(response) {
-                    $('#comments-container').html(response);
-                },
-            });
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('Ajax.review') }}", 
+            success: function(response) {
+                $('#comments-container').html(response);
+            },
         });
         $('#comments-form').submit(function(e) {
             e.preventDefault(); 
@@ -209,6 +207,62 @@
                     $('#comments-container').html(response);
                 },
             });
+        });
+        /* 
+        |   Star Review
+        */
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('Ajax.rating') }}", 
+            success: function(response) {
+                $('#ratings-container').html(response);
+            },
+        });
+        $('.star').click(function(e) {
+            $('.star').css('background-color', 'white');
+            $('.star').attr('data-check', "false");
+            $(this).attr('data-check', "true");
+            const dataIdValue = $(this).attr('data-value') - 1;
+            $('.star').each(function(index, element) {
+                if (index <= dataIdValue) {
+                    $(element).css('background-color', 'orange');
+                }
+            });
+        });
+        $('.close-rating').click(function(){
+            $('.star').css('background-color', 'white');
+        })
+        $('#submit-rating').click(function(event){
+            $('.star').each(function(index, element) {
+                if($(element).attr('data-check') === "true"){
+                    recipe_id = $(element).attr('data-recipe-id')
+                    rating = $(element).attr('data-value')
+                    $('.close-rating').click()
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('Ratings.create') }}", 
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {'recipe_id' : recipe_id, 'rating' : rating},
+                        success: function(response) {
+                            $('#ratings-container').html(response);
+                        },
+                    }); 
+                }
+            });
+        }); 
+        /* 
+        |   This for image in preview. HOVER effect
+        */
+        const imgRecipeURL = $("#prev-main-img").attr('src');
+        $(".recipe-imgs").mouseover(function () {
+            $(this).css('border', '4px solid blue');
+            $("#prev-main-img").attr("src", $(this).attr('src'));
+        });
+        $(".recipe-imgs").mouseout(function () {
+            $(this).css('border', 'none');
+            $("#prev-main-img").attr("src", imgRecipeURL);
         });
     </script>
 </html>

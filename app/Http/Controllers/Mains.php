@@ -7,6 +7,8 @@ use Illuminate\Routing\Controller;
 use App\Http\Controllers\Commons;
 use App\Models\Recipe;
 use App\Models\User;
+use App\Models\Rating;
+use App\Models\RecipeMoreInfo;
 
 class Mains extends Controller{
     /* 
@@ -17,7 +19,12 @@ class Mains extends Controller{
         $recipeResult = $recipeModel->take(6)->get();
         $data = $this->organiseData($recipeResult);
         $featuredUser = $this->userDetails();
-        return view('index',['recipes'=>$data[0], 'featured_user'=> $featuredUser, 'featuredRecipes'=>$data[1]]);
+        return view('index',[
+                'recipes'=>$data[0], 
+                'featured_user'=> $featuredUser, 
+                'featuredRecipes'=>$data[1]
+            ]
+        );
     }
     public function userDetails(){
         $user = new User;
@@ -26,11 +33,10 @@ class Mains extends Controller{
         foreach($find as $item){
             $moreDetails = $item->moreUserInfo()->first();
             $timestamp = strtotime($item['created_at']);
-            $formattedDate = date("F d, Y", $timestamp);
             $data[] = [
                 'first_name' => $item['first_name'],
                 'last_name' => $item['last_name'],
-                'created_at' => $formattedDate,
+                'created_at' => date("F d, Y", $timestamp),
                 'about_me' => (isset($moreDetails['about_me']))?$moreDetails['about_me']:"",
                 'education' => (isset($moreDetails['education']))?$moreDetails['education']:"",
             ];
@@ -42,10 +48,20 @@ class Mains extends Controller{
     */
     public function viewRecipe(string $id){
         $recipeModel = new Recipe;
+        $ratingMOdel = new Rating;
+        $recipeAdditionalInfo = new RecipeMoreInfo;
         $data = $recipeModel->find($id);
-        $ingredients = explode("~", $data['list_of_ingredients']);
-        $instructions = explode("~", $data['instructions']);
-        return view('viewRecipe', ['data' => $data, 'ingredients' => $ingredients, 'instruction' => $instructions]);
+        return view('viewRecipe', 
+            [
+                'data' => $data, 
+                'ingredients' => explode("~", $data['list_of_ingredients']), 
+                'instruction' => explode("~", $data['instructions']), 
+                'ave_rating' => ( $ratingMOdel->sum('rating')/$ratingMOdel->count() ), 
+                'user_data' => $data->user,
+                'main_img' => $data['url'],
+                'recipe_add_info' => $recipeAdditionalInfo->find($id),
+            ]
+        );
     }
     /* 
     |   Docu: This method is used for rendering create recipe form. This is Auth route protected. 
@@ -59,7 +75,7 @@ class Mains extends Controller{
     public function organiseData($query){
         $data = [];
         foreach($query->toarray() as $item0){
-            $commonFunctions = new Common;
+            $commonFunctions = new Commons;
             $timeDifference = $commonFunctions->getTimeAgo($item0['updated_at']);
             $data[] = [
                 'id' => $item0['id'],
