@@ -8,6 +8,10 @@ body{
     font-weight: bold;
     color: rgb(149, 67, 149);
 }
+.overflow-hidden{
+    height: 200px;
+    overflow: hidden;
+}
 .log-in{
     margin-right: 30px;
 }
@@ -109,4 +113,37 @@ footer{
 */
 .star:hover{
     background-color: orange;
+}
+/* 
+|   Recipe view
+*/
+#upload-recipe-button{
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.532);
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+/* 
+|   Profile picture
+*/
+#profile-picture{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+    top: -150px;
+    left: 50px;
+    z-index: 100;
+    border: 10px solid #F5F7F8;
+}
+#edit-profile-link{
+    height: 50px;
+}
+#profile-recipes{
+    overflow-y: auto;
+    max-height: 1000px
 }

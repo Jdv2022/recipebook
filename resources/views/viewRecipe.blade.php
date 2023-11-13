@@ -3,27 +3,53 @@
 @section('title', 'Recipe Book')
 
 @section('content')
+@if(Auth::id() === $user_data['id'])
+    @include('layouts.edit-recipe-modal')
+@endif
 <div class="container pb-5 d-flex justify-content-center align-items-center">
     <div class="container row mt-5 m-auto">
-        <div class="container col-md-6 m-auto col-sm-12">
+        <div class="container col-md-6 m-auto col-sm-12 position-relative">
             <img id="prev-main-img" class="col-12" src="{{ asset($main_img) }}" alt="Dish">
+            @if(Auth::id() === $user_data['id'])
+                @include('layouts.edit-recipe-modal')
+                <a id="upload-recipe-button" href="#" >Upload</a>
+            @endif
             <div class="row">
-                <div class="col-3 pt-1 pb-1">
+                <div class="col-3 pt-1 pb-1 position-relative">
                     <img class="img-fluid recipe-imgs" src="{{ asset('storage\user\MPY6vaVQG8Pu07g7O0aRSKGvvQ5ZoQmMBa3UUoM2.png') }}" alt="Dish">
+                    @if(Auth::id() === $user_data['id'])
+                        <a id="upload-recipe-button" href="#" >Upload</a>
+                    @endif
                 </div>
-                <div class="col-3 pt-1 pb-1">
+                <div class="col-3 pt-1 pb-1 position-relative">
                     <img class="img-fluid recipe-imgs" src="{{ asset('storage\user\FYz2afi51tS8ccKh3GiElqA18sIGLTIQEKY9QpDB.png') }}" alt="Dish">
+                    @if(Auth::id() === $user_data['id'])
+                        <a id="upload-recipe-button" href="#" >Upload</a>
+                    @endif
                 </div>
-                <div class="col-3 pt-1 pb-1">
+                <div class="col-3 pt-1 pb-1 position-relative">
                     <img class="img-fluid recipe-imgs" src="{{ asset('storage\user\YJ7SY1kan60FdRuYoUgEOjeyOM8jTH0vVLM7EMH4.png') }}" alt="Dish">
+                    @if(Auth::id() === $user_data['id'])
+                        <a id="upload-recipe-button" href="#" >Upload</a>
+                    @endif
                 </div>
-                <div class="col-3 pt-1 pb-1">
+                <div class="col-3 pt-1 pb-1 position-relative">
                     <img class="img-fluid recipe-imgs" src="{{ asset('storage\user\X2HTQD3pwArFMR9jY9eR9yo8ZbbWupVkNvJkyJ4h.png') }}" alt="Dish">
+                    @if(Auth::id() === $user_data['id'])
+                        <a id="upload-recipe-button" href="#" >Upload</a>
+                    @endif
                 </div>
             </div>
         </div>
         <div class="container col-md-5 h-100 col-sm-12">
-            <h1 class="m-0 violet">{{ $data['title'] }}</h1>
+            <h1 class="m-0 violet">
+                {{ $data['title'] }}
+            @if(Auth::id() === $user_data['id'])
+                <a href="" data-bs-toggle="modal" data-bs-target="#edit-recipe-modal">
+                    @include('layouts.edit-button')
+                </a>
+            @endif
+            </h1>
             <small class="custom-reply d-block">By {{ $user_data['first_name'] }} {{ $user_data['last_name'] }}</small>
             <div class="mt-3 mb-3">
             @php
@@ -49,9 +75,23 @@
             @endphp
             @endfor
             </div>
-            <h3>Description</h3>
+            <h3>
+                Description
+            @if(Auth::id() === $user_data['id'])
+                <a href="#">
+                    @include('layouts.edit-button')
+                </a>
+            @endif
+            </h3>
             <p>{{ $data['description'] }}</p>
-            <h3>Other Details</h3>
+            <h3>
+                Other Details
+            @if(Auth::id() === $user_data['id'])
+                <a href="#">
+                    @include('layouts.edit-button')
+                </a>
+            @endif
+            </h3>
             <p class="mb-1">Duration: <span class="custom-bold">{{ $recipe_add_info['duration'] }}<span></p>
             <p class="mb-1">Good for: <span class="custom-bold">{{ $recipe_add_info['good_for'] }}<span></p>
             <p class="mb-1">Difficulty: <span class="custom-bold">{{ $recipe_add_info['difficulty'] }}<span></p>
@@ -64,7 +104,14 @@
 @endphp
 <div class="w-100 row m-auto">
     <div class="container col-6 p-5">
-        <h2 class="mb-4">Ingredients</h2>
+        <h2 class="mb-4">
+            Ingredients
+        @if(Auth::id() === $user_data['id'])
+            <a href="#">
+                @include('layouts.edit-button')
+            </a>
+        @endif
+        </h2>
         <ul class="list-group">
         @foreach($ingredients as $item)
             <li class="list-group-item">
@@ -75,7 +122,14 @@
         </ul>
     </div>
     <div class="container col-6 p-5 custom-nuetral-bg-color">
-        <h2 class="mb-4">Method</h2>
+        <h2 class="mb-4">
+            Method
+        @if(Auth::id() === $user_data['id'])
+            <a href="#">
+                @include('layouts.edit-button')
+            </a>
+        @endif
+        </h2>
         @foreach($instruction as $item)
             <li class="list-group-item">
                 <h3>Step {{ $count }}</h3>

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('about_me', 250);
-            $table->string('Years of Experience', 100);
+            $table->string('location', 50);
+            $table->string('location', 50);
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

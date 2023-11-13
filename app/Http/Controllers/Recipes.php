@@ -27,5 +27,21 @@ class Recipes extends Controller{
         }
         dd('Not saved!');
     }
+
+    public function edit(Request $request, $id){
+        $recipeModel = new Recipe;
+        $row = $recipeModel->find($id);
+        $request->validate(['hidden' => 'required']);
+        $selection = [
+            'edit-modal-title' => $this->title($row, $request->input('title')),
+        ];
+        $selection[$request->input('hidden')];
+        return redirect()->route('Main.viewRecipe', $id);
+    }
+
+    public function title($model, $params){
+        $model->title = $params;
+        $model->save();
+    }
     
 }

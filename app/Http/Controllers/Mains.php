@@ -89,5 +89,17 @@ class Mains extends Controller{
         $featuredRecipe = array_chunk($data, 2);
         return [$finalRecipe, $featuredRecipe];
     }
+    /* 
+    |   Docu: Profile viewing
+    */
+    public function profile(){
+        return view('profile');
+    }
+    /* 
+    |   Docu: Edit recipe
+    */
+    public function editRecipe(string $id){
+        return view('editRecipe');
+    }
     
 }
