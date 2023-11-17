@@ -3,47 +3,87 @@
 @section('title', 'Recipe Book')
 
 @section('content')
-<div class="container">
+@if(Auth::id() === $user_data['id'])
+    @include('layouts.edit-profile')
+@endif
+<div class="container custom-minvh-100">
     <div class="container">
-        <div class="container cnotainer-fluid p-2 pl-3">
-            <small>Profile visitors: 3</small>
-        </div>
-        <div class="row overflow-hidden m-auto p-0">
-            <img class="img-fluid" src="{{ asset('storage\user\MPY6vaVQG8Pu07g7O0aRSKGvvQ5ZoQmMBa3UUoM2.png') }}" alt="cover" />
+        <div class="row overflow-hidden m-auto p-0 position-relative">
+            <img class="img-fluid" src="{{ asset($img['cover_url']) }}" alt="cover" />
+            <a href="#" class="upload-recipe-button w-25 text-center text-dark" data-bs-toggle="modal" data-bs-target="#edit-cover-modal">Upload</a>
         </div>
         <div class="container container-fluid position-relative">
-            <img id="profile-picture" src="{{ asset('storage\user\MPY6vaVQG8Pu07g7O0aRSKGvvQ5ZoQmMBa3UUoM2.png') }}" alt="profile" />
+            <img id="profile-picture" src="{{ asset($img['profile_url']) }}" alt="profile" />
             <div id="edit-profile-link" class="d-flex justify-content-end align-items-center">
-                <a href="">Edit Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
+                    @include('layouts.edit-button')
+                </a>
             </div>
-            <h1 class="m-0">John Dennis Vistal</h1>
-            <small class="custom-reply d-block">Bohol, Central Visayas, Philippines</small>
-            <small class="custom-reply d-block">Email: jhondennisvistal@gmail.com</small>
+            <h1 class="m-0">
+                {{ $user_data['first_name'] }}
+                {{ $user_data['last_name'] }}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#edit-name-modal">
+                    @include('layouts.edit-button')
+                </a>
+            </h1>
+            <small class="custom-reply d-block">
+                Location:
+                {{($more_info)?$more_info['location']:''}}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#edit-location-modal">
+                    @include('layouts.edit-button')
+                </a>
+            </small>
+            <small class="custom-reply d-block">
+                Email: {{ $user_data['email'] }}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#edit-email-modal">
+                    @include('layouts.edit-button')
+                </a>
+            </small>
+            <small class="custom-reply d-block">
+                Member since: {{ $user_data['created_at'] }}
+            </small>
             <small class="custom-reply d-block mb-3">Recipes contributed: 15</small>
-            <h2>About me</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim lobortis scelerisque fermentum dui faucibus in. Libero justo laoreet sit amet. In hendrerit gravida rutrum quisque non tellus.</p>
+            <h2>
+                About me
+                <a href="#" data-bs-toggle="modal" data-bs-target="#edit-aboutMe-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                </a>
+            </h2>
+            <p>
+                {{ $more_info['about_me'] }}
+            </p>
         </div>
     <div>
     <div class="container container-fluid">
         <h2 class="mb-4">Recipes</h2>
         <div id="profile-recipes" class="container row d-flex mb-5">
+        @foreach($recipe as $item)
             <div class="card col-3 m-auto mb-3" style="width: 18rem;">
-                <img src="{{ asset('storage\user\MPY6vaVQG8Pu07g7O0aRSKGvvQ5ZoQmMBa3UUoM2.png') }}" class="card-img-top" alt="...">
+                <a href="{{ route('Main.viewRecipe', $item['id']) }}">
+                    <img src="{{ asset($item['url']) }}" class="card-img-top" alt="...">
+                </a>
                 <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">
+                        {{ $item['description'] }}
+                    </p>
                 </div>
                 <div>
-                @for($i=0; $i < 5; $i++)
-                    <svg class="mb-1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
-                        <polygon points="50,10 61.8,37.6 90,37.6 66.2,54.4 78.4,81 50,64.2 21.6,81 33.8,54.4 10,37.6 38.2,37.6" fill="orange" stroke="orange" stroke-width="3px" />
-                    </svg> 
-                @endfor
+                    @include('layouts.stars-rating')
+                    @include('layouts.person-heart')
                 </div>
                 <div class="card-footer row">
-                    <a href="#" type="button" class="btn btn-primary col-5 m-auto">Edit</a>
-                    <button type="button" class="btn btn-danger col-5 m-auto">Delete</button>
+                    <a href="{{ route('Main.viewRecipe', $item['id']) }}" type="button" class="btn btn-primary col-5 m-auto">Edit</a>
+                    <form class="col-5 p-0 m-auto" action="{{ route('Recipes.delete', $item['id']) }}" method="POST" >
+                        @method('DELETE')
+                        @csrf
+                        <input type="submit" class="btn btn-danger col-12 m-auto" value="Delete"></input>
+                    </form>
                 </div>
             </div>
+        @endforeach
         </div>
     </div>
 </div>

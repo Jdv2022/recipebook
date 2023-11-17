@@ -13,10 +13,10 @@ return new class extends Migration
         Schema::create('recipe_more_infos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('recipe_id');
-            $table->string('duration', 40);
-            $table->string('good_for', 40);
-            $table->string('difficulty', 40);
-            $table->string('budget', 40);
+            $table->string('duration', 20);
+            $table->string('good_for', 20);
+            $table->string('difficulty', 20);
+            $table->string('budget', 20);
             $table->timestamps();
 
             $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');

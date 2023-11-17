@@ -12,16 +12,20 @@
     <body>
         <nav class="navbar navbar-expand-lg position-sticky top-0 sticky-top custom-nav-color">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('Main.index') }}">Recipe Book</a>
+                <a class="navbar-brand text-bold" href="{{ route('Main.index') }}">Recipe Book</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <a class="btn btn-dark log-in custom-nav-color border border-0" href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
+                    <form action="{{ route('Main.search') }}" method="GET" class="d-flex custom-margin-left" role="search">
+                        <input class="form-control m-0 custom-search" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <button class="btn btn-outline-light custom-nav-color custom-buttom-search" type="submit">Search</button>
+                    </form>
+                    <a class="btn btn-dark log-in custom-nav-color border border-0 " href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
                 @if (auth()->check())
-                    <a href="{{ route('Main.profile') }}" class="btn btn-dark log-in custom-nav-color border border-0">My Profile</a>
+                    <a href="{{ route('Main.profile', Auth::id()) }}" class="btn btn-dark log-in custom-nav-color border border-0">My Profile</a>
                     <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
-                    @else
+                @else
                     <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 @endif
@@ -29,7 +33,24 @@
             </div>
         </nav>
         <main>
+        @if (auth()->check())
+            <div class="modal fade" id="logout-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to log out?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body row">
+                            <a href="{{ route('Users.logoutUser') }}" type="button" class="btn btn-primary col-5 m-auto" id="submit-login">Yes</a>
+                            <button type="submit" class="btn btn-secondary col-5 m-auto" data-bs-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
             @include('layouts.sign-reg-modals')
+        @endif
             @yield('content')
         </main>
         <footer class="container-fluid text-center">
@@ -161,10 +182,82 @@
         /* 
         | Edits modals
         */
-        @if(old('hidden') === "edit-modal-title")
+        @if(old('hidden') === "edit-title-modal")
             $(document).ready(function() {
-                $('#edit-recipe-modal').modal('show');
+                $('#edit-title-recipe-modal').modal('show');
             });
         @endif
+        @if(old('hidden') === "edit-description-modal")
+            $(document).ready(function() {
+                $('#edit-description-recipe-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-otherDetails-modal")
+            $(document).ready(function() {
+                $('#edit-otherDetails-recipe-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-ingredients-modal")
+            $(document).ready(function() {
+                $('#edit-ingredients-recipe-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-method-modal")
+            $(document).ready(function() {
+                $('#edit-method-recipe-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "main_recipeImg_modal")
+            $(document).ready(function() {
+                $('#edit-mainImg-recipe-modal').modal('show');
+            });
+        @endif
+        $(".upload-recipe-button").click(function () {
+            const dataSubValue = $(this).attr('data-sub');
+            $('#hidden-sub-pics').attr('value', dataSubValue)
+            $('#edit-sub-recipe-modal').modal('show');
+        });
+        /* 
+        |   Edit profile
+        */
+        @if(old('hidden') === "cover_modal")
+            $(document).ready(function() {
+                $('#edit-cover-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "profile_modal")
+            $(document).ready(function() {
+                $('#edit-profile-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-profileName-modal")
+            $(document).ready(function() {
+                $('#edit-name-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-location-modal")
+            $(document).ready(function() {
+                $('#edit-location-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-email-modal")
+            $(document).ready(function() {
+                $('#edit-email-modal').modal('show');
+            });
+        @endif
+        @if(old('hidden') === "edit-aboutMe-modal")
+            $(document).ready(function() {
+                $('#edit-aboutMe-modal').modal('show');
+            });
+        @endif
+        /* 
+        |   For long texts see more
+        */
+        $('.truncate-text').each(function(){
+            const text = $(this).text();
+            if(text.length > 220){
+                $(this).text(text.substring(0, 220) + ' ' + '...');
+            }
+        })
     </script>
 </html>

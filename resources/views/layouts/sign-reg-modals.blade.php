@@ -48,8 +48,8 @@
             </div>
         </div>
     </div>
-    </div>
-    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+<div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,20 +85,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" id="submit-login">Submit</button>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="modal fade" id="logout-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure to log out?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body row">
-                <a href="{{ route('Users.logoutUser') }}" type="button" class="btn btn-primary col-5 m-auto" id="submit-login">Yes</a>
-                <button type="submit" class="btn btn-secondary col-5 m-auto" data-bs-dismiss="modal">No</button>
             </div>
         </div>
     </div>

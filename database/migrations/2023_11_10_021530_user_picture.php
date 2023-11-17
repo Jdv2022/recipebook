@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('user_pictures', function (Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('url', 150);
+            $table->string('profile_url', 250);
+            $table->string('cover_url', 250);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

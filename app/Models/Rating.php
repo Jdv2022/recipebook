@@ -14,4 +14,8 @@ class Rating extends Model{
         ];
     }
 
+    public function recipe() {
+        return $this->belongsTo(Recipe::class); 
+    }
+
 }

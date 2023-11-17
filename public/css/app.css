@@ -4,6 +4,48 @@
 body{
     background-color: #F5F7F8;
 }
+.font-small{
+    font-size: .8rem;
+}
+.text-wrap-balance{
+    text-wrap: balance;
+}
+.foot-violet{
+    background-color: #7743DB;
+}
+.foot-yellow{
+    background-color: #F4CE14;
+}
+.foot-green{
+    background-color: #54B435;
+}
+.custom-padding-left-12px{
+    padding-left: 12px;
+}
+.grey{
+    background-color: rgba(128, 128, 128, 0.54);
+}
+.custom-height-300{
+    height: 400px;
+    overflow: hidden;
+    background-color: rgba(128, 128, 128, 0.516);
+    color: white;
+    text-align: center;
+}
+.custom-height-100{
+    min-height: 90px;
+    background-color: rgba(128, 128, 128, 0.516);
+}
+.custom-margin-left{
+    margin-right: 50px;
+}
+.custom-search{
+    border-radius: 10px 0 0 10px;
+}
+.custom-buttom-search{
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+}
 .violet{
     font-weight: bold;
     color: rgb(149, 67, 149);
@@ -117,7 +159,7 @@ footer{
 /* 
 |   Recipe view
 */
-#upload-recipe-button{
+.upload-recipe-button{
     padding: 5px 10px;
     text-decoration: none;
     color: white;
@@ -147,3 +189,11 @@ footer{
     overflow-y: auto;
     max-height: 1000px
 }
+/* 
+text
+*/
+.truncated-text{
+    height: 100px;
+    overflow: hidden;
+}
+

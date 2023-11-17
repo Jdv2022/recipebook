@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use App\Models\UserAdditionalDetails;
+use App\Models\UserPicture;
+use App\Models\Recipe;
 
 class User extends Authenticatable{
     use HasFactory;
@@ -31,6 +32,14 @@ class User extends Authenticatable{
 
     public function moreUserInfo(){
         return $this->hasone(UserAdditionalDetails::class);
+    }
+
+    public function userPicture(){
+        return $this->hasone(UserPicture::class);
+    }
+
+    public function recipes(){
+        return $this->hasMany(Recipe::class);
     }
 
 }

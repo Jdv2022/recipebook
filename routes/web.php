@@ -20,7 +20,8 @@ use App\Http\Controllers\Mains;
 Route::get('/', [Mains::class, 'index'])->name('Main.index');
 Route::get('/create/recipe', [Mains::class, 'recipeUserInput'])->name('Main.recipeUserInput')->middleware('auth');
 Route::get('/show/recipe/{id}', [Mains::class, 'viewRecipe'])->name('Main.viewRecipe');
-Route::get('/show/profile', [Mains::class, 'profile'])->name('Main.profile');
+Route::get('/show/profile/{id}', [Mains::class, 'profile'])->name('Main.profile');
+Route::get('/search/result', [Mains::class, 'search'])->name('Main.search');
 /* 
 |   Docu: Users controller for user related process
 */
@@ -28,12 +29,14 @@ use App\Http\Controllers\Users;
 Route::post('/register/user', [Users::class, 'registerUser'])->name('Users.registerUser');
 Route::post('/login/user', [Users::class, 'loginUser'])->name('Users.loginUser');
 Route::get('/logout/user', [Users::class, 'logoutUser'])->name('Users.logoutUser');
+Route::patch('/edit/user', [Users::class, 'edit'])->name('Users.edit');
 /* 
 |   Docu: Recipes controller for recipes related process
 */
 use App\Http\Controllers\Recipes;
 Route::post('/create/new/recipe', [Recipes::class, 'createRecipes'])->name('Recipes.createRecipes');
 Route::patch('/edit/title/{id}', [Recipes::class, 'edit'])->name('Recipes.edit');
+Route::delete('/delete/recipe/{id}', [Recipes::class, 'delete'])->name('Recipes.delete');
 /* 
 |   Docu: Comments controller
 */
