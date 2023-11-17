@@ -50,6 +50,10 @@ body{
     font-weight: bold;
     color: rgb(149, 67, 149);
 }
+.blue{
+    font-weight: bold;
+    color: rgb(23, 13, 97);
+}
 .overflow-hidden{
     height: 200px;
     overflow: hidden;
@@ -150,6 +154,11 @@ footer{
     background-color: rgb(46, 29, 16);
     color: white;
 }
+.about-me{
+    min-height: 50px;
+    max-height: 80px;
+    overflow: hidden;
+}
 /* 
 | Star rating
 */
@@ -182,6 +191,10 @@ footer{
     z-index: 100;
     border: 10px solid #F5F7F8;
 }
+#homepage-profile{
+    width: 100px;
+    height: 100px;
+}
 #edit-profile-link{
     height: 50px;
 }
@@ -194,6 +207,10 @@ text
 */
 .truncated-text{
     height: 100px;
+    overflow: hidden;
+}
+.truncated-text-50{
+    height: 70px;
     overflow: hidden;
 }
 

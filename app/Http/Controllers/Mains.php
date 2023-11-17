@@ -17,6 +17,8 @@ class Mains extends Controller{
     public function index(){
         $toRender = [
             'latest_section' => $this->latestSection(), 
+            'featured_user' => $this->featuredSection(), 
+            'featured_recipes' => $this->featuredRecipe(), 
         ];
         return view('index', $toRender);
     }
@@ -44,16 +46,69 @@ class Mains extends Controller{
         }
         return $recipeModel;
     }
+    private function featuredSection(){
+        $unsorted;
+        $userModel = User::with(
+            'moreUserInfo:user_id,about_me,location', 
+            'userPicture:user_id,profile_url,cover_url',
+            'recipes:id,user_id',
+            'recipes.rating:recipe_id,rating'
+            )
+            ->select(['id', 'first_name', 'last_name', 'created_at'])
+            ->get();
+            
+        foreach($userModel as &$items){
+            $count = 0;
+            $sum = 0;
+            $items['time'] = date("F j, Y", strtotime($items['created_at']));
+            $items['total_recipes'] = count($items->recipes);
+            unset($items['created_at']);
+            foreach($items->recipes as &$item){
+                if(count($item->rating) > 0){
+                    $result = $this->sortRatings($item->rating);
+                    $count += $result['count'];
+                    $sum += $result['rating'];
+                }
+            }
+            if($count > 0){
+                $items['rate'] = ['count' => $count, 'rating' => $sum];
+            }
+            else{
+                $items['rate'] = ['count' => 0, 'rating' => 0];
+            }
+        }
+        $sorted = array_slice(Commons::sortThis($userModel->toarray()), 0, 5);
+        return $sorted;
+    }
+    private function featuredRecipe(){
+        $unsorted;
+        $userModel = Recipe::with(
+            'rating:recipe_id,rating',
+            'user:id,first_name,last_name'
+            )
+            ->select(['id', 'user_id', 'title', 'description', 'url', 'created_at'])
+            ->get();
+            
+        foreach($userModel as &$items){
+            if(count($items->rating) > 0){
+                $items['rate'] = $this->sortRatings($items->rating);
+            }
+            else{
+                $items['rate'] = ['count' => 0, 'rating' => 0];
+            }
+        }
+        $sorted = array_slice(Commons::sortThis($userModel->toarray()), 0, 9);
+        return $sorted;
+    }
+    //calculate the average rating.returns the total number of participated user and rating
     private function sortRatings($params){
         $count = 0;
-        $rating = 0;
+        $sum = 0;
         foreach($params as $item){
             $count++;
-            $rating += $item->rating; 
+            $sum += $item->rating; 
         }
-        $params->count = $count;
-        $params->rating = $rating;
-        return ['count' => $count, 'rating' => round($rating/$count, 2)];
+        return ['count' => $count, 'rating' => round($sum/$count, 2)];
     }
     /* 
     |   Docu: Show recipe info

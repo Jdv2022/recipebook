@@ -59,7 +59,7 @@ class Commons extends Controller{
         $leftIndex = 0;
         $rightIndex = 0;
         while($leftIndex < count($left) && $rightIndex < count($right)){ 
-            if($left[$leftIndex]['rating'] > $right[$rightIndex]['rating']){
+            if($left[$leftIndex]['rate']['rating'] > $right[$rightIndex]['rate']['rating']){
                 $result[] = $left[$leftIndex];
                 $leftIndex++;
             }
