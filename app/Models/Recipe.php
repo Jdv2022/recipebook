@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\RecipeMoreInfo;
 use App\Models\Rating;
+use App\Models\Comment;
 
 class Recipe extends Model{
     use HasFactory;
 
-    protected $fillable = ['url'];
+    protected $fillable = ['user_id', 'title', 'description', 'list_of_ingredients', 'instructions', 'url'];
 
-    public function recipeValidations(){
+    public static function createRecipeValidation(){
         return [
             'hidden' => 'required',
             'title' => 'required',
             'description' => 'required',
             'list_of_ingredients' => 'required',
             'instructions' => 'required',
-            'food_picture' => 'required|mimes:jpeg,png,jpg',
+            'profile_pic' => 'required|mimes:jpeg,png,jpg',
         ];
     }
     
@@ -38,6 +39,10 @@ class Recipe extends Model{
 
     public function rating(){
         return $this->hasMany(Rating::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
 }

@@ -56,5 +56,5 @@ Route::post('/rating/create', [Ratings::class, 'create'])->name('Ratings.create'
 |   Docu: For Ajax function
 */
 use App\Http\Controllers\Ajax;
-Route::get('/ajax/request/review', [Ajax::class, 'review'])->name('Ajax.review');
-Route::get('/ajax/request/rating', [Ajax::class, 'rating'])->name('Ajax.rating');
+Route::get('/ajax/request/review/{id}', [Ajax::class, 'review'])->name('Ajax.review');
+Route::get('/ajax/request/rating/{id}', [Ajax::class, 'rating'])->name('Ajax.rating');

@@ -16,14 +16,14 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" value="{{ old('description') }}"></textarea>
+            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
         @error('description')
             <span class="text-danger m-0 custom-small">{{ $message }}</span>
         @enderror
         </div>
         <div class="mb-3">
             <label for="list_of_ingredients" class="form-label">List of Ingredients</label>
-            <textarea class="form-control" id="list_of_ingredients" name="list_of_ingredients" value="{{ old('list_of_ingredients') }}"></textarea>
+            <textarea class="form-control" id="list_of_ingredients" name="list_of_ingredients">{{ old('list_of_ingredients') }}</textarea>
         @error('list_of_ingredients')
             <span class="text-danger m-0 custom-small">{{ $message }}</span>
         @enderror
@@ -33,7 +33,7 @@
         </div>
         <div class="mb-3">
             <label for="instructions" class="form-label">Instructions</label>
-            <textarea class="form-control" id="instructions" name="instructions" value="{{ old('instructions') }}"></textarea>
+            <textarea class="form-control" id="instructions" name="instructions">{{ old('instructions') }}</textarea>
         @error('instructions')
             <span class="text-danger m-0 custom-small">{{ $message }}</span>
         @enderror
@@ -43,7 +43,7 @@
         </div>
         <div class="mb-3">
             <label for="formFileSm" class="form-label">Upload Main Dish Picture</label>
-            <input class="form-control form-control-sm" id="formFileSm" type="file" name="food_picture">
+            <input class="form-control form-control-sm" id="formFileSm" type="file" name="profile_pic">
         @error('food_picture')
             <span class="text-danger m-0 custom-small">{{ $message }}</span>
         @enderror

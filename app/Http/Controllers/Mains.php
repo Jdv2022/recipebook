@@ -19,6 +19,7 @@ class Mains extends Controller{
             'latest_section' => $this->latestSection(), 
             'featured_user' => $this->featuredSection(), 
             'featured_recipes' => $this->featuredRecipe(), 
+            'viewName' => 'index',
         ];
         return view('index', $toRender);
     }
@@ -114,7 +115,20 @@ class Mains extends Controller{
     |   Docu: Show recipe info
     */
     public function viewRecipe(string $id){
-        $recipeModel = new Recipe;
+        $recipeModel = Recipe::with(
+                'user:id,first_name,last_name',
+                'subPictures:recipe_id,url',
+                'moreInfo:recipe_id,duration,good_for,difficulty,budget',
+                'rating:recipe_id,rating',
+                'comments:id,user_id,recipe_id,content,created_at',
+                'comments.user:id,first_name,last_name',
+                'comments.replies:id,user_id,content,created_at',
+                )
+            ->find($id);
+        $recipeModel->list_of_ingredients_sorted = explode("~", $recipeModel['list_of_ingredients']);
+        $recipeModel->instructions_sorted = explode("~", $recipeModel['instructions']);
+        return view('viewRecipe', ['recipe_data' => $recipeModel, 'viewName' => 'viewRecipe']);
+        /* $recipeModel = new Recipe;
         $ratingMOdel = new Rating;
         $data = $recipeModel->find($id);
         $subImages = [];
@@ -140,7 +154,7 @@ class Mains extends Controller{
                 'recipe_add_info' => $data->moreInfo,
                 'sub_pictures' => $subImages,
             ]
-        );
+        ); */
     }
     /* 
     |   Docu: This method is used for rendering create recipe form. This is Auth route protected. 
@@ -170,6 +184,7 @@ class Mains extends Controller{
             'recipe' => $recipeData, 
             'rate' => $rate,
             'num_people_rate' => $count,
+            'viewName' => 'profile',
         ]);
     }
     /* 
@@ -187,7 +202,7 @@ class Mains extends Controller{
         $word = $keyword->input('search');
         $recipeResult = Recipe::where('title', 'LIKE', '%'.$word.'%')->get();
         $integratedData = $this->recipeRating($recipeResult);
-        return view('searchResult', ['result' => $integratedData]);
+        return view('searchResult', ['result' => $integratedData, 'viewName' => 'searchResult']);
     }
 
     /* 

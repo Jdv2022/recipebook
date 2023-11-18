@@ -13,27 +13,29 @@ use Illuminate\Support\Facades\Storage;
 class Recipes extends Controller{
     
     public function createRecipes(Request $request){
-        $model = new Recipe;
-        $validate = $request->validate($model->recipeValidations());
-        $uploadedFile = $request->file('food_picture');
-        $uploadedFile->store('public/user');
+        $request->validate(Recipe::createRecipeValidation());
+        $uploadedFile = $request->file('profile_pic');
+        $uploadedFile->store('public/user'); 
+        $url = 'storage/user/' . $uploadedFile->hashName();
+        $request->merge([
+            'title' => ucwords($request->input('title')),
+            'description' => ucfirst($request->input('description')),
+            'user_id' => Auth::id(),
+            'url' => $url,
+        ]);
 
-        $model->user_id = Auth::id();
-        $model->title = $request->input('title');
-        $model->description = $request->input('description');
-        $model->list_of_ingredients = $request->input('list_of_ingredients');
-        $model->instructions = $request->input('instructions');
-        $model->url = 'storage/user/' . $uploadedFile->hashName();
+        $createResult = Recipe::create($request->all());
 
-        if($model->save()){
-            $moreModel = new RecipeMoreInfo;
-            $moreModel->recipe_id = $model->id;
-            $moreModel->duration = "";
-            $moreModel->good_for = "";
-            $moreModel->difficulty = "";
-            $moreModel->budget = "";
-            $moreModel->save();
-            return redirect()->route('Main.viewRecipe', $model->id);
+        if($createResult){
+            $initMoreInfo = [
+                'recipe_id' => $createResult->id,
+                'duration' => '',
+                'good_for' => '',
+                'difficulty' => '',
+                'budget' => '',
+            ];
+            RecipeMoreInfo::create($initMoreInfo);
+            return redirect()->route('Main.viewRecipe', $createResult->id);
         }
         return redirect()->back();
     }
@@ -66,13 +68,13 @@ class Recipes extends Controller{
     */
     public function title($model, $request){
         $request->validate(['hidden' => 'required', 'title'=> 'required']);
-        $model->title = $request->input('title');
+        $model->title = ucwords($request->input('title'));
         $model->save();
     }
 
     public function description($model, $request){
         $request->validate(['hidden' => 'required', 'description' => 'required']);
-        $model->description = $request->input('description');
+        $model->description = ucfirst($request->input('description'));
         $model->save();
     }
 

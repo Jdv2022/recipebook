@@ -12,11 +12,9 @@ class Comments extends Controller{
     |   Docu: Insert comments, redirect to ajax controller
     */
     public function create(Request $request){
-        $model = new Comment;
-        $validate = $request->validate($model->validation());
-        $model->user_id = Auth::id();
-        $model->content = $request->input('comment-input'); 
-        $model->save();
-        return redirect()->route('Ajax.review');
+        $request->validate(Comment::validation());
+        $request['user_id'] = Auth::id();
+        Comment::create($request->all());
+        return redirect()->route('Ajax.review', $request->input('recipe_id'));
     }
 }

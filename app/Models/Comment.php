@@ -11,9 +11,11 @@ use App\Models\User;
 class Comment extends Model{
     use HasFactory;
 
-    public function validation(){
+    protected $fillable = ['user_id','recipe_id','content'];
+
+    public static function validation(){
         return [
-            'comment-input' => 'required',
+            'content' => 'required',
         ];
     }
 

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model{
     use HasFactory;
 
-    public function validations(){
+    protected $fillable = ['user_id', 'recipe_id', 'rating'];
+
+    public static function validations(){
         return [
             'rating' => 'required',
         ];

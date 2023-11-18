@@ -12,13 +12,10 @@ class Replies extends Controller{
     |   Docu: Insert replies, redirect to ajax controller
     */
     public function create(Request $request){
-        $model = new Reply;
-        $request->validate($model->validations());
-        $model->user_id = Auth::id();
-        $model->comment_id = $request->input('id');
-        $model->content = $request->input('comment-reply');
-        $model->save();
-        return redirect()->route('Ajax.review');
+        $request->validate(Reply::validations());
+        $request['user_id'] = Auth::id();
+        Reply::create($request->all());
+        return redirect()->route('Ajax.review', $request->input('comment_id'));
     }
     
 }

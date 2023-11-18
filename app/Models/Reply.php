@@ -10,10 +10,12 @@ use App\Models\User;
 class Reply extends Model{
     use HasFactory;
 
-    public function validations(){
+    protected $fillable = ['user_id','comment_id','content'];
+
+    public static function validations(){
         return [
-            'id' => 'required',
-            'comment-reply' => 'required',
+            'comment_id' => 'required',
+            'content' => 'required',
         ];
     }
 
