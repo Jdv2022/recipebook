@@ -11,17 +11,16 @@
         <div class="container col-md-6 m-auto col-sm-12 position-relative ">
             <div class="custom-height-300 d-flex align-items-center">
             @if($recipe_data['url'])
-                <img id="prev-main-img" class="col-12" src="" alt="Dish">
+                <img id="prev-main-img" class="col-12" src="{{ asset($recipe_data['url']) }}" alt="Dish">
             @else
-                <img class="img-fluid recipe-imgs m-auto" src="" alt="Dish">
+                <img class="img-fluid recipe-imgs m-auto" src="{{ asset('img/def-bg') }}" alt="Dish">
             @endif
             </div>
-            @if(Auth::id() === $recipe_data['user']['first_name'])
-                
+            @if(Auth::id() === $recipe_data['user']['id'])
                 <a class="upload-recipe-button" href="" data-bs-toggle="modal" data-bs-target="#edit-mainImg-recipe-modal">Upload</a>
             @endif
             <div class="row">
-                
+                @include('layouts.sub-images')
             </div>
         </div>
         <div class="container col-md-5 h-100 col-sm-12">
@@ -69,7 +68,7 @@
 @php
     $count = 1;
 @endphp
-<div class="w-100 row m-auto">
+<div class="w-100 row m-auto overflow-x-hidden">
     <div class="container col-6 p-5">
         <h2 class="mb-4">
             Ingredients
@@ -88,20 +87,20 @@
         @endforeach
         </ul>
     </div>
-    <div class="container col-6 p-5 custom-nuetral-bg-color">
-        <h2 class="mb-4">
-            Method
-        @if(Auth::id() === $recipe_data['user']['id'])
-            <a href="" data-bs-toggle="modal" data-bs-target="#edit-method-recipe-modal">
-                @include('layouts.edit-button')
-            </a>
-        @endif
-        </h2>
-        @foreach($recipe_data['instructions_sorted'] as $item)
-            <li class="list-group-item">
-                <h3>Step {{ $count }}</h3>
-                <p>{{ $item }}</p>
-            </li>
+<div class="container col-6 p-5 custom-nuetral-bg-color overflow-x-hidden">
+    <h2 class="mb-4">
+        Method
+    @if(Auth::id() === $recipe_data['user']['id'])
+        <a href="" data-bs-toggle="modal" data-bs-target="#edit-method-recipe-modal">
+            @include('layouts.edit-button')
+        </a>
+    @endif
+    </h2>
+    @foreach($recipe_data['instructions_sorted'] as $item)
+        <li class="list-group-item">
+            <h3>Step {{ $count }}</h3>
+            <p>{{ $item }}</p>
+        </li>
 @php
     $count += 1;
 @endphp

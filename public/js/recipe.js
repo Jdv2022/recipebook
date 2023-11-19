@@ -31,8 +31,29 @@ if(oldHidden === "main_recipeImg_modal"){
         $('#edit-mainImg-recipe-modal').modal('show');
     });
 }
-$(".upload-recipe-button").click(function () {
+if(oldHidden === "main_sub_modal"){
+    $(document).ready(function() {
+        $('#edit-sub-recipe-modal').modal('show');
+    });
+}
+/* 
+|   This is for sub-images in recipe/ passes the original url to the modal . this is important
+*/
+$(".subs").click(function () {
+    console.log('dataSubValue')
     const dataSubValue = $(this).attr('data-sub');
     $('#hidden-sub-pics').attr('value', dataSubValue)
     $('#edit-sub-recipe-modal').modal('show');
+});
+/* 
+|   This for image in preview. HOVER effect
+*/
+const imgRecipeURL = $("#prev-main-img").attr('src');
+$(".recipe-imgs").mouseover(function () {
+    $(this).css('opacity', '.5');
+    $("#prev-main-img").attr("src", $(this).attr('src'));
+});
+$(".recipe-imgs").mouseout(function () {
+    $(this).css('opacity', '1');
+    $("#prev-main-img").attr("src", imgRecipeURL);
 });

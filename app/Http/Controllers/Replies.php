@@ -15,7 +15,7 @@ class Replies extends Controller{
         $request->validate(Reply::validations());
         $request['user_id'] = Auth::id();
         Reply::create($request->all());
-        return redirect()->route('Ajax.review', $request->input('comment_id'));
+        return redirect()->route('Ajax.review', $request->input('recipe_id'));
     }
     
 }

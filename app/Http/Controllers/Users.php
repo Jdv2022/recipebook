@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserPicture;
 use App\Models\UserAdditionalDetails;
-use App\Http\Controllers\Commons;
+use App\Helpers\Commons;
 
 /* 
 | Docu: handles all users processes (validation, insert and Auth)

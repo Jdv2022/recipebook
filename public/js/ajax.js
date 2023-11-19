@@ -19,7 +19,6 @@ $('#comments-form').submit(function(e) {
         },
         data: formData,
         success: function(response) {
-            console.log(response)
             $('#comment-input').val('');
             $('#comments-container').html(response);
         },
@@ -36,7 +35,6 @@ $('#comments-container').on('submit','#reply-form',function(e) {
         },
         data: formData,
         success: function(response) {
-            console.log(response)
             $('#comment-reply').val('');
             $('#comments-container').html(response);
         },
@@ -86,15 +84,3 @@ $('#submit-rating').click(function(event){
         }
     });
 }); 
-/* 
-|   This for image in preview. HOVER effect
-*/
-const imgRecipeURL = $("#prev-main-img").attr('src');
-$(".recipe-imgs").mouseover(function () {
-    $(this).css('opacity', '.5');
-    $("#prev-main-img").attr("src", $(this).attr('src'));
-});
-$(".recipe-imgs").mouseout(function () {
-    $(this).css('opacity', '1');
-    $("#prev-main-img").attr("src", imgRecipeURL);
-});

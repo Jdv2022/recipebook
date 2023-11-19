@@ -170,6 +170,7 @@
                 <div class="modal-body">
                     <div>
                         <input type="hidden" name="hidden" value="main_recipeImg_modal" />
+                        <input type="hidden" name="recipe_id" value="{{ $recipe_data['id'] }}" />
                         <input type="hidden" name="original_url" value="{{ $recipe_data['url'] }}" />
                         <label class="form-label">Upload picture</label>
                         <input name="main_recipe_img" class="form-control form-control-lg" type="file">
@@ -200,11 +201,12 @@
                 <div class="modal-body">
                     <div>
                         <input type="hidden" name="hidden" value="main_sub_modal" />
-                        <input id="hidden-sub-pics" type="hidden" name="original_url" />
+                        <input type="hidden" name="recipe_id" value="{{ $recipe_data['id'] }}" />
+                        <input id="hidden-sub-pics" type="hidden" name="original_url"/>
                         <label class="form-label">Upload picture</label>
-                        <input name="main_recipe_img" class="form-control form-control-lg" type="file">
+                        <input name="sub_recipe_img" class="form-control form-control-lg" type="file">
                     </div>
-                    @error('main_recipe_img')
+                    @error('sub_recipe_img')
                         <span class="text-danger m-0 custom-small">{{ $message }}</span>
                     @enderror
                 </div>

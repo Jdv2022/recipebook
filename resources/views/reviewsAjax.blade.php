@@ -1,6 +1,6 @@
 
 
-@foreach($comments as $comment)
+@foreach($comments['comments'] as $comment)
 <div class="custom-review-section">
     <div class="d-inline-block comment-container">
         <div>
@@ -19,6 +19,7 @@
     <form id="reply-form" class="input-group p-1 pb-0">
         @csrf
         <input type="hidden" name="comment_id" value="{{ $comment['id'] }}"/>
+        <input type="hidden" name="recipe_id" value="{{ $comments['id'] }}"/>
         <input name="content" type="text" class="form-control" placeholder="{{ $errors->has('reply-input') ? $errors->first('reply-input') : 'Post a reply' }}" aria-label="Recipient's username" aria-describedby="button-addon2">
         <input id="comment-reply" class="btn btn-dark custom-chatbox-reply text-dark border border-0" type="submit" value="Reply"/>
     </form>
