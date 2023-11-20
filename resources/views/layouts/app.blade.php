@@ -7,6 +7,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
@@ -21,11 +22,12 @@
                         <input class="form-control m-0 custom-search" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-light custom-nav-color custom-buttom-search" type="submit">Search</button>
                     </form>
-                    <a class="btn btn-dark log-in custom-nav-color border border-0 " href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
                 @if (auth()->check())
+                    <a class="btn btn-dark log-in custom-nav-color border border-0 " href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
                     <a href="{{ route('Main.profile', Auth::id()) }}" class="btn btn-dark log-in custom-nav-color border border-0">My Profile</a>
                     <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
                 @else
+                    <a class="btn btn-dark log-in custom-nav-color border border-0 " data-bs-toggle="modal" data-bs-target="#login-modal">Add Recipe</a>
                     <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
                 @endif

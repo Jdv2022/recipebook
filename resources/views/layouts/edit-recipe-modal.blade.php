@@ -173,9 +173,9 @@
                         <input type="hidden" name="recipe_id" value="{{ $recipe_data['id'] }}" />
                         <input type="hidden" name="original_url" value="{{ $recipe_data['url'] }}" />
                         <label class="form-label">Upload picture</label>
-                        <input name="main_recipe_img" class="form-control form-control-lg" type="file">
+                        <input name="recipemain" class="form-control form-control-lg" type="file">
                     </div>
-                    @error('main_recipe_img')
+                    @error('recipemain')
                         <span class="text-danger m-0 custom-small">{{ $message }}</span>
                     @enderror
                 </div>
@@ -204,9 +204,9 @@
                         <input type="hidden" name="recipe_id" value="{{ $recipe_data['id'] }}" />
                         <input id="hidden-sub-pics" type="hidden" name="original_url"/>
                         <label class="form-label">Upload picture</label>
-                        <input name="sub_recipe_img" class="form-control form-control-lg" type="file">
+                        <input name="recipesub" class="form-control form-control-lg" type="file">
                     </div>
-                    @error('sub_recipe_img')
+                    @error('recipesub')
                         <span class="text-danger m-0 custom-small">{{ $message }}</span>
                     @enderror
                 </div>

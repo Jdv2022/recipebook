@@ -2,7 +2,7 @@
     user-select: none;
 }
 body{
-    background-color: #F5F7F8;
+    background-color: #FCFBFA;
 }
 .font-small{
     font-size: .8rem;
@@ -55,6 +55,18 @@ body{
     font-weight: bold;
     color: rgb(23, 13, 97);
 }
+.custom-height-profile-rep-pic{
+    height: 150px;
+    overflow: hidden;
+}
+.custom-height-200{
+    height: 200px;
+    overflow: hidden;
+}
+.custom-height-profile-rep{
+    height: 95px;
+    overflow: hidden;
+}
 .overflow-hidden{
     height: 200px;
     overflow: hidden;
@@ -99,7 +111,7 @@ body{
 }
 .img_default{
     border-radius: 10px;
-    border: 2px solid black;
+    border: 2px solid rgb(255, 255, 255);
 }
 .custom-bg2-bgcolor-inner{
     border-bottom: 5px solid orange;
@@ -133,7 +145,7 @@ body{
 .custom-reply{
     font-size: .8rem;
     text-decoration: none;
-    color: grey;
+    color: rgb(138, 138, 124);
     text-align: left;
 }
 .custom-chatbox-reply{

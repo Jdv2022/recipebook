@@ -109,12 +109,18 @@ class Mains extends Controller{
             $count++;
             $sum += $item->rating; 
         }
-        return ['count' => $count, 'rating' => round($sum/$count, 2)];
+        if($count != 0){
+            return ['count' => $count, 'rating' => round($sum/$count, 2)];
+        }
+        return ['count' => $count, 'rating' => 0];
     }
     /* 
     |   Docu: Show recipe info
     */
     public function viewRecipe(string $id){
+        if(!Recipe::where('id', $id)->exists()){
+            return redirect()->route('Main.index');
+        }
         $recipeModel = Recipe::with(
                 'user:id,first_name,last_name',
                 'subPictures:recipe_id,url',
@@ -127,34 +133,8 @@ class Mains extends Controller{
             ->find($id);
         $recipeModel->list_of_ingredients_sorted = explode("~", $recipeModel['list_of_ingredients']);
         $recipeModel->instructions_sorted = explode("~", $recipeModel['instructions']);
+        $recipeModel->rate = $this->sortRatings($recipeModel['rating']);
         return view('viewRecipe', ['recipe_data' => $recipeModel, 'viewName' => 'viewRecipe']);
-        /* $recipeModel = new Recipe;
-        $ratingMOdel = new Rating;
-        $data = $recipeModel->find($id);
-        $subImages = [];
-        $count = 0;
-        $rate = 0;
-        if($ratingMOdel->count() !== 0){
-            $rate = $ratingMOdel->sum('rating')/$ratingMOdel->count();
-        }
-        foreach($data->subPictures as $sub){    //organise the sub-recipe-picture for easy display
-            $subImages[$count] = $sub['url']; 
-            $count++;
-        }
-        return view('viewRecipe', 
-            [
-                'data' => $data, 
-                'original_ingredients' => $data['list_of_ingredients'],
-                'original_instructions' => $data['instructions'],
-                'ingredients' => explode("~", $data['list_of_ingredients']), 
-                'instruction' => explode("~", $data['instructions']), 
-                'rate' => $rate, 
-                'num_people_rate' => $ratingMOdel->count(),
-                'user_data' => $data->user,
-                'recipe_add_info' => $data->moreInfo,
-                'sub_pictures' => $subImages,
-            ]
-        ); */
     }
     /* 
     |   Docu: This method is used for rendering create recipe form. This is Auth route protected. 
@@ -166,26 +146,20 @@ class Mains extends Controller{
     |   Docu: Profile viewing
     */
     public function profile(string $id){
-        $user = new User;
-        $userData = $user->find($id);
-        $recipeData = $userData->recipes;
-        $img = $userData->userPicture;
-        $moreInfo = $userData->moreUserInfo;
-        $ratingMOdel = new Rating;
-        $rate = 0;
-        $count = $ratingMOdel->count();
-        if($count){
-            $rate = $ratingMOdel->sum('rating')/$count;
+        if(!User::where('id', $id)->exists()){
+            return redirect()->route('Main.index');
         }
-        return view('profile',[ 
-            'user_data' => $userData, 
-            'img' => $img, 
-            'more_info' => $moreInfo, 
-            'recipe' => $recipeData, 
-            'rate' => $rate,
-            'num_people_rate' => $count,
-            'viewName' => 'profile',
-        ]);
+        $user = User::with(
+            'moreUserInfo:id,user_id,about_me,location',
+            'userPicture:id,user_id,profile_url,cover_url',
+            'recipes:id,user_id,title,description,url,created_at',
+            'recipes.rating:id,recipe_id,rating'
+            )->select('id','first_name','last_name','email','created_at')->find($id);
+            
+        foreach($user['recipes'] as &$item){
+            $item['rate'] = $this->sortRatings($item['rating']);
+        }
+        return view('profile', ['user_data' => $user]);
     }
     /* 
     |   Docu: Edit recipe

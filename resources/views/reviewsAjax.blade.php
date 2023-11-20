@@ -16,6 +16,7 @@
         </div>
     @endforeach
     </div>
+@if(Auth::id())
     <form id="reply-form" class="input-group p-1 pb-0">
         @csrf
         <input type="hidden" name="comment_id" value="{{ $comment['id'] }}"/>
@@ -23,5 +24,11 @@
         <input name="content" type="text" class="form-control" placeholder="{{ $errors->has('reply-input') ? $errors->first('reply-input') : 'Post a reply' }}" aria-label="Recipient's username" aria-describedby="button-addon2">
         <input id="comment-reply" class="btn btn-dark custom-chatbox-reply text-dark border border-0" type="submit" value="Reply"/>
     </form>
+@else
+    <form id="reply-form" class="input-group p-1 pb-0">
+        <input type="text" class="form-control" placeholder="{{ $errors->has('reply-input') ? $errors->first('reply-input') : 'Post a reply' }}" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <input id="comment-reply" class="btn btn-dark custom-chatbox-reply text-dark border border-0" data-bs-toggle="modal" data-bs-target="#login-modal" value="Reply"/>
+    </form>
+@endif
 </div>
 @endforeach

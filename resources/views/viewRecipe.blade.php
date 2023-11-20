@@ -32,14 +32,16 @@
                 </a>
             @endif
             </h1>
+            @include('layouts.stars-rating')
+            @include('layouts.person-heart')
             <small class="custom-reply d-block">
                 By: 
-                <a class="text-decoration-none custom-reply" href="{{ route('Main.profile', $recipe_data['id']) }}">
+                <a class="text-decoration-none custom-reply" href="{{ route('Main.profile', $recipe_data['user']['id']) }}">
                     {{ $recipe_data['user']['first_name'] }} {{ $recipe_data['user']['last_name'] }}
                 </a>
             </small>
             <div class="mt-3 mb-3">
-       
+
             </div>
             <h3>
                 Description
@@ -118,32 +120,39 @@
         <!-- This is for AJAX in Reviews -->
         <div id="comments-container" class="custom-reviewcontainer"></div> 
 
+    @if(Auth::id())
         <form id="comments-form" class="input-group custom-comment-input p-1 pb-0" style="z-index: 100;">
             @csrf
             <input type="hidden" name="recipe_id" value="{{ $recipe_data['id'] }}" />
             <input id="comment-input" name="content" type="text" class="form-control" placeholder="{{ $errors->has('content') ? $errors->first('content') : 'Post a comment' }}" aria-label="Recipient's username" aria-describedby="button-addon2">
             <input class="btn btn-dark custom-nav-color text-light border border-0" type="submit" value="Post"/>
+        </form> 
+    @else
+        <form id="comments-form" class="input-group custom-comment-input p-1 pb-0" style="z-index: 100;">
+            <input id="comment-input" name="content" type="text" class="form-control" placeholder="{{ $errors->has('content') ? $errors->first('content') : 'Post a comment' }}" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input class="btn btn-dark custom-nav-color text-light border border-0" data-bs-toggle="modal" data-bs-target="#login-modal" value="Post"/>
         </form>
+    @endif
     </div>
 </div>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Rate the Recipe!</h1>
-            <button type="button" class="btn-close close-rating" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-        @for($i = 1; $i <= 5; $i++)
-            <svg class="m-2 star" data-value="{{ $i }}" data-recipe-id="{{ $recipe_data['id'] }}" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
-                <polygon points="50,10 61.8,37.6 90,37.6 66.2,54.4 78.4,81 50,64.2 21.6,81 33.8,54.4 10,37.6 38.2,37.6" fill="white" stroke="orange" stroke-width="10px" />
-            </svg> 
-        @endfor
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close-rating" data-bs-dismiss="modal">Close</button>
-            <button id="submit-rating" type="button" class="btn btn-primary">Submit Rating</button>
-        </div>
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Rate the Recipe!</h1>
+                <button type="button" class="btn-close close-rating" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+            @for($i = 1; $i <= 5; $i++)
+                <svg class="m-2 star" data-value="{{ $i }}" data-recipe-id="{{ $recipe_data['id'] }}" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
+                    <polygon points="50,10 61.8,37.6 90,37.6 66.2,54.4 78.4,81 50,64.2 21.6,81 33.8,54.4 10,37.6 38.2,37.6" fill="white" stroke="orange" stroke-width="10px" />
+                </svg> 
+            @endfor
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-rating" data-bs-dismiss="modal">Close</button>
+                <button id="submit-rating" type="button" class="btn btn-primary">Submit Rating</button>
+            </div>
         </div>
     </div>
 </div>

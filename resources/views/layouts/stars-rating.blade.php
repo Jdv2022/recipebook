@@ -1,5 +1,10 @@
 @php
-    $count = $rate;
+if(isset($recipe_data['rating'][0])){
+    $count = $recipe_data['rating'][0]['rating'];
+}
+else{
+    $count = 0;
+}
 @endphp
 @for($i = 1; $i <= 5; $i++)
 @if($count >= 1)

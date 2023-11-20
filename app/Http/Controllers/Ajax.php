@@ -21,16 +21,15 @@ class Ajax extends Controller{
         return view('reviewsAjax', ['comments' => $mainObject]);
     }
     /* 
-    | Docu: This method is used for getting the rating of a recipe using id
+    |   Docu: This method is used for getting the rating of a recipe using id
     */
     public function rating(string $id){
         $ratingModel = new Rating;
-        $alreadyRated = $ratingModel->where('user_id', Auth::id())->exists();
+        $alreadyRated = $ratingModel->where('user_id', Auth::id())->where('recipe_id', $id)->exists();
         $data = [];
         for($index = 5; $index > 0; $index--){
             $data[$index] = $ratingModel->where('recipe_id', $id)->where('rating', $index)->count();
         }
         return view('rating', ['rating_data' => $data, 'alreadyRated' => $alreadyRated]);
     }
-    
 }

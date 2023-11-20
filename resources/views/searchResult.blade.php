@@ -20,9 +20,13 @@
             <div class="col">
                 <div class="card">
                 @if(isset($item['url']))
-                    <img src="{{ asset($item['url']) }}" class="card-img-top" alt="Responsive Image">
+                    <a href="{{ route('Main.viewRecipe', $item['id']) }}">
+                        <img src="{{ asset($item['url']) }}" class="card-img-top custom-height-300" alt="Responsive Image">
+                    </a>
                 @else
-                    <img class="card-img-top" src="{{ asset('img/sub.png') }}" alt="Dish">
+                    <a href="{{ route('Main.viewRecipe', $item['id']) }}">
+                        <img class="card-img-top" src="{{ asset('img/sub.png') }}" alt="Dish">
+                    </a>
                 @endif 
                     <div class="card-body">
                         <h5 class="card-title">
@@ -34,7 +38,7 @@
                                 {{ $item['owner']['first_name'] }} {{ $item['owner']['last_name'] }}
                             </a>
                         </small>
-                        <p class="card-text">
+                        <p class="card-text custom-height-profile-rep-pic">
                             {{ $item['description'] }}
                         </p>
                         <div>

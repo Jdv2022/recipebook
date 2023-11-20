@@ -20,21 +20,28 @@ class Commons extends Controller{
             $updatedAt->diffForHumans()
         );
     }
+
+    public static function toDateFormat($params){
+        $date = date("F j, Y", strtotime($params));
+        return $date;
+    }
     /* 
     |   Docu: THis deletes and store user images
     */
-    public function userPictures($params, $request, $url){
+    public static function userPictures($params, $request, $url){
         if($params){
             $newString = str_replace("storage", "public", $params);
             Storage::delete($newString); //delete the existing image
         }
-        $selection = [
+        $selection = [ // key is the keyword and value is the location of file to be saved
             'cover' => 'public/cover', 
             'profile' => 'public/profile',
+            'recipemain' => 'public/recipemain',
+            'recipesub' => 'public/recipesub',
         ];
         foreach($selection as $key => $value){
-            $uploadedFile = $request->file($key); 
             if(stripos($url, $key) !== false){
+                $uploadedFile = $request->file($key); 
                 $uploadedFile->store($value); //new replacement
             }
         }

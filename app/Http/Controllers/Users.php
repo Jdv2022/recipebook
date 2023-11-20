@@ -91,28 +91,23 @@ class Users extends Controller{
     |   Docu: edit functions
     */
     public function updateCover($model, $request){
-        $commonMethods = new Commons;
-        $request->validate([
-            'cover' => 'required|mimes:jpg,jpeg,png',
-            'hidden' => 'required',
-        ]);
+        $request->validate(['cover' => 'required|mimes:jpg,jpeg,png','hidden' => 'required',]);
         $uploadedFile = $request->file('cover'); 
         $url = 'storage/cover/' . $uploadedFile->hashName();
-        $commonMethods->userPictures($request->input('original_url'), $request, $url);
+        Commons::userPictures($request->input('original_url'), $request, $url);
         $newModel = $model->userPicture;
         $newModel->cover_url = $url;
         $newModel->save();
     }
 
     public function updateProfile($model, $request){
-        $commonMethods = new Commons;
         $request->validate([
             'profile' => 'required|mimes:jpg,jpeg,png',
             'hidden' => 'required',
         ]);
         $uploadedFile = $request->file('profile'); 
         $url = 'storage/profile/' . $uploadedFile->hashName();
-        $commonMethods->userPictures($request->input('original_url'), $request, $url);
+        Commons::userPictures($request->input('original_url'), $request, $url);
         $newModel = $model->userPicture;
         $newModel->profile_url = $url;
         $newModel->save();

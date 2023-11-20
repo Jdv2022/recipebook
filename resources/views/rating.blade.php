@@ -14,7 +14,9 @@
     </li>
 @endforeach
 </ol>
-@if($alreadyRated)
+@if(!Auth::id())
+<a class="btn btn-dark custom-nav-color border border-0 mt-5" data-bs-toggle="modal" data-bs-target="#login-modal">Rate Recipe</a>
+@elseif($alreadyRated)
 <button type="button" class="btn btn-secondary mt-5" disabled>Already Rated</button>
 @else
 <a class="btn btn-dark custom-nav-color border border-0 mt-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Rate Recipe</a>

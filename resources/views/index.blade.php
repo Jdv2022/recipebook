@@ -10,7 +10,7 @@
         @foreach($latest_section as $item)
             <div class="col">
                 <div class="card">
-                    <a href="{{ route('Main.viewRecipe', $item->id) }}">
+                    <a href="{{ route('Main.viewRecipe', $item->id) }}" class="custom-height-200">
                         <img src="{{ $item->url }}" class="card-img-top" alt="...">
                     </a>
                     <div class="card-body">
@@ -18,7 +18,7 @@
                             {{ $item->title }}
                             <p>
                                 <a class="custom-reply" href="{{ route('Main.profile', $item->user->id) }}">
-                                    By: {{ $item->user->first_name }} {{ $item->user->last_name }}
+                                    By: {{ $item['user']['first_name'] }} {{ $item['user']['last_name'] }}
                                 </a>
                             </p>
                         </h5>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-footer border border-0 custom-nav-color">
                         <small class="text-black">
-                                {{ $item->time  }}
+                                {{ App\Helpers\Commons::getTimeAgo($item['updated_at'])  }}
                         </small>
                     </div>
                 </div>
@@ -57,8 +57,9 @@
         <div class="container d-flex mb-3 p-3 rounded m-auto">
         @if($count%2==0)
             <div class="container custom-bg2-bgcolor-inner w-100">
-                <h2><a class="text-decoration-none blue" href="{{ route('Main.profile', $item['id']) }}">{{ $item['first_name'] }}  {{ $item['last_name'] }}</a></h2>
-
+                <h2>
+                    <a class="text-decoration-none blue" href="{{ route('Main.profile', $item['id']) }}">{{ $item['first_name'] }}  {{ $item['last_name'] }}</a>
+                </h2>
                 <p class="about-me">{{ $item['more_user_info']['about_me'] }}</p>
                 <div class="card-footer border border-0">
                 <small class="text-black d-block">Total recipes contributed: {{ $item['total_recipes'] }}</small>
@@ -110,8 +111,12 @@
             <div class="col">
                 <div class="card mb-3 custom-bg2-bgcolor-inner" style="max-width: 540px;">
                     <div class="row g-0">
-                        <a href="{{ route('Main.viewRecipe', $item['id']) }}" class="col-md-4 overflow-hidden d-flex align-items-center">
-                            <img src="{{ asset($item['url']) }}" class="img-fluid rounded-start h-100" alt="...">
+                        <a href="{{ route('Main.viewRecipe', $item['id']) }}" class="custom-nuetral-bg-color col-md-4 overflow-hidden d-flex align-items-center">
+                        @if($item['url'])
+                            <img src="{{ asset($item['url']) }}" class="img-fluid rounded-start h-100 m-auto" alt="...">
+                        @else
+                            <img class="img-fluid recipe-imgs m-auto" src="{{ asset('img/sub.png') }}" alt="Dish">
+                        @endif
                         </a>
                         <div class="col-md-8">
                             <div class="card-body">

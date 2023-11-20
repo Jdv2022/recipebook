@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
 use App\Models\RecipeMoreInfo;
 use App\Models\RecipePicture;
+use App\Helpers\Commons;
 use Illuminate\Support\Facades\Storage;
 
 class Recipes extends Controller{
@@ -107,22 +108,23 @@ class Recipes extends Controller{
     }
 
     public function mainImg($model, $request){
-        $request->validate(['hidden' => 'required','main_recipe_img' => 'required|mimes:jpg,jpeg,png',]);
+        $request->validate(['hidden' => 'required','recipemain' => 'required|mimes:jpg,jpeg,png',]);
         $img = $request->input('original_url');
-        $uploadedFile = $request->file('main_recipe_img'); 
-        $uploadedFile->store('public/user'); //new replacement
-        $url = 'storage/user/' . $uploadedFile->hashName();
-        Recipe::where('url', $img)->update(['url' => $url]);
-        Storage::delete($request->input('original_url')); //delete the existing image
+        $uploadedFile = $request->file('recipemain'); 
+        $url = 'storage/recipemain/' . $uploadedFile->hashName();
+        Commons::userPictures($img, $request, $url);
+        $recipeModel = Recipe::find($request->input('recipe_id'));
+        $recipeModel->url = $url;
+        $recipeModel->save();
     } 
 
     public function subImg($model, $request, $id){
-        $request->validate(['hidden' => 'required', 'sub_recipe_img' => 'required|mimes:jpg,jpeg,png',]);
+        $request->validate(['hidden' => 'required', 'recipesub' => 'required|mimes:jpg,jpeg,png',]);
         $img = $request->input('original_url');
-        $uploadedFile = $request->file('sub_recipe_img'); 
-        $uploadedFile->store('public/user'); //new replacement
-        $url = 'storage/user/' . $uploadedFile->hashName();
+        $uploadedFile = $request->file('recipesub'); 
+        $url = 'storage/recipesub/' . $uploadedFile->hashName();
         $request['url'] = $url;
+        Commons::userPictures($img, $request, $url);
         $data = Recipe::with('subPictures:id,recipe_id,url')->select('id')->find($id);
         if(count($data['subPictures']) < 4){
             RecipePicture::create($request->all());
@@ -130,7 +132,6 @@ class Recipes extends Controller{
         else{
             if(RecipePicture::where('url', $img)->exists()){
                 RecipePicture::where('url', $img)->update(['url' => $url]);
-                Storage::delete($img); //delete the existing image
             }
         } 
     }
