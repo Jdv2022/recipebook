@@ -5,6 +5,7 @@
         <meta name = "viewport" content= "width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv = "X-UA-Compatible" content = "IE = edge,chrome = 1">
         <meta name = "HandheldFriendly" content = "true">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name = "author" content = "jdv2022" />
         <meta name = "keywords" content = "personal projects, css, html, javascript, js, recipe, recipes, bootstrap, php, laravel, foods, how to make food, cheap food, make food, list of food, dish, fancy dish ">
         
@@ -36,17 +37,17 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-end mt-3 mt-md-0" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse justify-content-end mt-3 mt-lg-0" id="navbarSupportedContent">
                     <form action="{{ route('Main.search') }}" method="GET" class="d-flex custom-margin-left" role="search">
                         <input class="form-control m-0 custom-search" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-light custom-nav-color custom-buttom-search" type="submit">Search</button>
                     </form>
-@if (auth()->check())                    <a class="btn btn-dark log-in custom-nav-color border border-0 " href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
-                    <a href="{{ route('Main.profile', Auth::id()) }}" class="btn btn-dark log-in custom-nav-color border border-0">My Profile</a>
-                    <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
-@else                    <a class="btn btn-dark log-in custom-nav-color border border-0 " data-bs-toggle="modal" data-bs-target="#login-modal">Add Recipe</a>
-                    <a class="btn btn-dark log-in custom-nav-color border border-0" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
+@if (auth()->check())                    <a class="btn btn-dark log-in custom-nav-color border border-0 d-block d-lg-inline" href="{{ route('Main.recipeUserInput') }}">Add Recipe</a>
+                    <a href="{{ route('Main.profile', Auth::id()) }}" class="btn btn-dark log-in custom-nav-color border border-0 d-block d-lg-inline">My Profile</a>
+                    <a class="btn btn-dark log-in custom-nav-color border border-0 d-block d-lg-inline" data-bs-toggle="modal" data-bs-target="#logout-modal">Log out</a>
+@else                    <a class="btn btn-dark log-in custom-nav-color border border-0 d-block d-lg-inline" data-bs-toggle="modal" data-bs-target="#login-modal">Add Recipe</a>
+                    <a class="btn btn-dark log-in custom-nav-color border border-0 d-block d-lg-inline" data-bs-toggle="modal" data-bs-target="#login-modal">Log in</a>
+                    <button type="button" class="btn btn-dark d-block d-lg-inline" data-bs-toggle="modal" data-bs-target="#registration-modal">Create an Account</button>
 @endif                </div>
             </div>
         </nav>

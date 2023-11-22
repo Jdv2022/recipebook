@@ -9,6 +9,7 @@ use App\Models\Recipe;
 use App\Models\RecipeMoreInfo;
 use App\Models\RecipePicture;
 use App\Http\Controllers\Commons;
+use Illuminate\Support\Facades\Storage;
 
 class Recipes extends Controller{
 
@@ -56,8 +57,8 @@ class Recipes extends Controller{
     public function createRecipes(Request $request){
         $request->validate(Recipe::createRecipeValidation());
         $uploadedFile = $request->file('profile_pic');
-        $uploadedFile->store('public/user'); 
-        $url = 'storage/user/' . $uploadedFile->hashName();
+        $uploadedFile->store('public/recipemain'); 
+        $url = 'storage/recipemain/' . $uploadedFile->hashName();
         $request->merge([
                 'title' => ucwords($request->input('title')),
                 'description' => ucfirst($request->input('description')),
@@ -174,9 +175,17 @@ class Recipes extends Controller{
     }
     
     public function delete($id){
-        $model = new Recipe;
-        $row = $model->find($id);
-        $row->delete();
+        $model = Recipe::with('subPictures:recipe_id,url')
+            ->select('id','url')
+            ->find($id);
+
+        foreach($model['subPictures'] as $item){
+            $newString = str_replace("storage", "public", $item['url']);
+            Storage::delete($newString);
+        }
+        $newString = str_replace("storage", "public", $model['url']);
+        Storage::delete($newString);
+        $model->delete();
         return redirect()->route('Main.profile', Auth::id());
     }
     /* 

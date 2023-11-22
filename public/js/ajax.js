@@ -70,14 +70,16 @@ $('#submit-rating').click(function(event){
             recipe_id = $(element).attr('data-recipe-id')
             rating = $(element).attr('data-value')
             $('.close-rating').click()
+            console.log(recipe_id, rating)
             $.ajax({
                 type: 'POST',
                 url: ratingCreate, 
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': csrf
                 },
                 data: {'recipe_id' : recipe_id, 'rating' : rating},
                 success: function(response) {
+                    console.log(response)
                     $('#ratings-container').html(response);
                 },
             }); 

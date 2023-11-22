@@ -71,7 +71,7 @@
         $count = 1;
 @endphp
     <div class="w-100 row m-auto overflow-x-hidden">
-        <div class="container col-6 p-5">
+        <div class="container col-12 col-md-6 p-5">
             <h2 class="mb-4">
                 Ingredients
 @if(Auth::id() === $recipe_data['user']['id'])
@@ -89,7 +89,7 @@
 @endforeach
             </ul>
         </div>
-    <div class="container col-6 p-5 custom-nuetral-bg-color overflow-x-hidden">
+    <div class="container col-12 col-md-6 p-5 custom-nuetral-bg-color overflow-x-hidden">
         <h2 class="mb-4">
             Method
 @if(Auth::id() === $recipe_data['user']['id'])
