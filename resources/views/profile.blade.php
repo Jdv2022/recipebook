@@ -74,7 +74,7 @@
                             <a href="{{ route('Main.viewRecipe', $item['id']) }}" class="custom-height-profile-rep-pic">
                                 <img src="{{ asset($item['url']) }}" class="card-img-top" alt="...">
                             </a>
-                            <h5 class="card-title text-wrap-balance">
+                            <h5 class="card-title text-wrap-balance h-70">
                                 {{ $item['title'] }}
                             </h5>
                             <div class="card-body custom-height-profile-rep">

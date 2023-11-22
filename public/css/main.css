@@ -12,13 +12,13 @@ body{
     margin-right: 30px;
 }
 #custom-background-1{
-    background-image: url("http://localhost:8000/img/bg1.png");
+    background-image: url("http://jdv2022-projects.tech/img/bg1.png");
 }
 #custom-background-2{
-    background-image: url("http://localhost:8000/img/bg2.png");
+    background-image: url("http://jdv2022-projects.tech/img/bg2.png");
 }
 #custom-background-3{
-    background-image: url("http://localhost:8000/img/bg3.png");
+    background-image: url("http://jdv2022-projects.tech/img/bg3.png");
 }
 .common_img{
     background-size: cover;

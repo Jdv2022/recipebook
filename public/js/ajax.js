@@ -11,6 +11,7 @@ $.ajax({
 $('#comments-form').submit(function(e) {
     e.preventDefault(); 
     const formData = $(this).serialize();
+    console.log(commentsCreate)
     $.ajax({
         type: 'POST',
         url: commentsCreate, 
@@ -19,6 +20,7 @@ $('#comments-form').submit(function(e) {
         },
         data: formData,
         success: function(response) {
+            console.log(response)
             $('#comment-input').val('');
             $('#comments-container').html(response);
         },
@@ -70,16 +72,14 @@ $('#submit-rating').click(function(event){
             recipe_id = $(element).attr('data-recipe-id')
             rating = $(element).attr('data-value')
             $('.close-rating').click()
-            console.log(recipe_id, rating)
             $.ajax({
                 type: 'POST',
                 url: ratingCreate, 
                 headers: {
-                    'X-CSRF-TOKEN': csrf
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {'recipe_id' : recipe_id, 'rating' : rating},
                 success: function(response) {
-                    console.log(response)
                     $('#ratings-container').html(response);
                 },
             }); 

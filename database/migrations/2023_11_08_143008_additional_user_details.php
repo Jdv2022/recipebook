@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_additional_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('about_me', 250);
+            $table->text('about_me');
             $table->string('location', 50);
             $table->timestamps();
             
