@@ -6,13 +6,13 @@
         <div>
             <small class="custom-reply">{{ $comment['user']['first_name'] }} {{ $comment['user']['last_name'] }}</small>
             <p class="custom-chatbox text-dark d-block">{{ $comment['content'] }}</p>
-            <p class="custom-reply m-0 d-block"><small>{{ \App\Helpers\Commons::getTimeAgo($comment['created_at']) }}</small></p>
+            <p class="custom-reply m-0 d-block"><small>{{ $comment['created_at']->format('F j, Y') }}</small></p>
         </div>
     @foreach($comment['replies'] as $rep)
         <div class="mt-1">
             <small class="custom-reply d-block">{{  $rep['user']['first_name'] }} {{  $rep['user']['last_name'] }}</small>
             <p class="custom-chatbox-reply text-dark">{{ $rep['content'] }}</p>
-            <p class="custom-reply m-0 d-block"><small>{{ \App\Helpers\Commons::getTimeAgo($rep['created_at']) }}</small></p>
+            <p class="custom-reply m-0 d-block"><small>{{ $rep['created_at']->format('F j, Y') }}</small></p>
         </div>
     @endforeach
     </div>

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +11,7 @@ class Commons extends Controller{
     /* 
     |   Docu: This Method will get the difference in date / time now and date / time updated. "X time ago"
     */
-    public static function getTimeAgo($carbonObject) {
+    public static function getTimeAgo($carbonObject){
         $updatedAt = Carbon::parse($carbonObject);
         return str_ireplace(
             [' seconds', ' second', ' minutes', ' minute', ' hours', ' hour', ' days', ' day', ' weeks', ' week'], 
@@ -21,12 +20,8 @@ class Commons extends Controller{
         );
     }
 
-    public static function toDateFormat($params){
-        $date = date("F j, Y", strtotime($params));
-        return $date;
-    }
     /* 
-    |   Docu: THis deletes and store user images
+    |   Docu: THis deletes the old image and store new user image
     */
     public static function userPictures($params, $request, $url){
         if($params){
@@ -46,6 +41,23 @@ class Commons extends Controller{
             }
         }
     }
+
+    /* 
+    |   Calculate the average rating.returns the total number of participated user and rating
+    */
+    public static function sortRatings($params){
+        $count = 0;
+        $sum = 0;
+        foreach($params as $item){
+            $count++;
+            $sum += $item->rating; 
+        }
+        if($count != 0){
+            return ['count' => $count, 'rating' => round($sum/$count, 2)];
+        }
+        return ['count' => $count, 'rating' => 0];
+    }
+
     /* 
     |   Docu: merge sort for the featured users with best recipe ratings
     */
@@ -53,14 +65,12 @@ class Commons extends Controller{
         if(count($array) <= 1){
             return $array;
         }
-        
         $total = count($array);
         $left = array_slice($array, 0, ceil($total/2));
         $right = array_slice($array, ceil($total/2), $total);
-    
         return self::mergeSort(self::sortThis($left), self::sortThis($right));
-    
     }
+
     private static function mergeSort($left, $right){
         $result = [];
         $leftIndex = 0;
@@ -75,8 +85,6 @@ class Commons extends Controller{
                 $rightIndex++;
             }
         }
-        
-        // Merge remaining elements from left or right sub-arrays
         while($leftIndex < count($left)){
             $result[] = $left[$leftIndex];
             $leftIndex++;
@@ -85,8 +93,9 @@ class Commons extends Controller{
             $result[] = $right[$rightIndex];
             $rightIndex++;
         }
-        
         return $result;
     }    
-    
+    /* 
+    |   End merge sort
+    */
 }

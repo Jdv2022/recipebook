@@ -1,0 +1,42 @@
+*{
+    user-select: none;
+}
+body{
+    background-color: #FCFBFA;
+}
+.overflow-hidden{
+    height: 200px;
+    overflow: hidden;
+}
+.log-in{
+    margin-right: 30px;
+}
+#custom-background-1{
+    background-image: url("http://localhost:8000/img/bg1.png");
+}
+#custom-background-2{
+    background-image: url("http://localhost:8000/img/bg2.png");
+}
+#custom-background-3{
+    background-image: url("http://localhost:8000/img/bg3.png");
+}
+.common_img{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-position: center;
+}
+.img_default{
+    border-radius: 50%;
+    border: 2px solid rgb(255, 255, 255);
+}
+footer{
+    background-color: rgb(46, 29, 16);
+    color: white;
+}
+
+
+
+
+
+

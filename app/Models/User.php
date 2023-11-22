@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\UserAdditionalDetails;
 use App\Models\UserPicture;
 use App\Models\Recipe;
+use App\Http\Controllers\Commons;
 
 class User extends Authenticatable{
     use HasFactory;

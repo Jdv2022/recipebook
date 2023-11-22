@@ -1,0 +1,128 @@
+.font-small{
+    font-size: .8rem;
+}
+.text-wrap-balance{
+    text-wrap: balance;
+}
+.foot-violet{
+    background-color: #7743DB;
+}
+.foot-yellow{
+    background-color: #F4CE14;
+}
+.foot-green{
+    background-color: #54B435;
+}
+.grey{
+    background-color: rgba(128, 128, 128, 0.54);
+}
+.custom-chatbox, .custom-chatbox-reply{
+    padding: 5px 10px;
+    background-color: rgba(255, 166, 0, 0.467);
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    border-radius: 11px;
+}
+.custom-reply{
+    font-size: .8rem;
+    text-decoration: none;
+    color: rgb(138, 138, 124);
+    text-align: left;
+}
+.custom-chatbox-reply{
+    background-color: rgba(80, 217, 217, 0.436);
+}
+.custom-comment-input{
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+}
+.custom-reviewcontainer{
+    height: 350px;
+    overflow: auto;
+}
+.custom-border-top-reviews{
+    border-top: 7px solid rgba(0, 0, 255, 0.177);
+}
+.custom-reviews{
+    font-size: 1.5rem;
+}
+.custom-review-section{
+    font-size: 1rem;
+    font-weight: normal;
+    text-align: left;
+    padding-right: 20px;
+}
+.custom-bg2-bgcolor-inner{
+    border-bottom: 5px solid orange;
+}
+.custom-small{
+    font-size: .8rem;
+}
+.custom-minvh-100{
+    min-height: 100vh;
+}
+.custom-container-height{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.custom-bold{
+    font-weight: bold;
+}
+.custom-nav-color{
+    background-color: orange;
+}
+.custom-nuetral-bg-color{
+    background-color: #D1EFEB;
+}
+.custom-height-profile-rep-pic{
+    height: 150px;
+    overflow: hidden;
+}
+.custom-height-200{
+    height: 200px;
+    overflow: hidden;
+}
+.custom-height-profile-rep{
+    height: 95px;
+    overflow: hidden;
+}
+.violet{
+    font-weight: bold;
+    color: rgb(149, 67, 149);
+}
+.blue{
+    font-weight: bold;
+    color: rgb(23, 13, 97);
+}
+.custom-padding-left-12px{
+    padding-left: 12px;
+}
+.custom-height-300{
+    height: 400px;
+    overflow: hidden;
+    background-color: rgba(128, 128, 128, 0.516);
+    color: white;
+    text-align: center;
+}
+.custom-height-100{
+    height: 90px;
+    overflow: hidden;
+    background-color: rgba(128, 128, 128, 0.516);
+}
+.custom-margin-left{
+    margin-right: 50px;
+}
+.custom-search{
+    border-radius: 10px 0 0 10px;
+}
+.custom-buttom-search{
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+}
+.h-70{
+    height: 50px;
+    overflow-y: hidden;
+}

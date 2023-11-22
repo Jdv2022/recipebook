@@ -9,12 +9,48 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserPicture;
 use App\Models\UserAdditionalDetails;
-use App\Helpers\Commons;
+use App\Http\Controllers\Commons;
 
 /* 
 | Docu: handles all users processes (validation, insert and Auth)
 */
 class Users extends Controller{
+    /* 
+    |   Docu: for homepage index view
+    */
+    public static function featuredSection(){
+        $unsorted;
+        $userModel = User::with(
+            'moreUserInfo:user_id,about_me,location', 
+            'userPicture:user_id,profile_url,cover_url',
+            'recipes:id,user_id',
+            'recipes.rating:recipe_id,rating'
+            )
+            ->select(['id', 'first_name', 'last_name', 'created_at'])
+            ->get();
+        foreach($userModel as &$items){
+            $count = 0;
+            $sum = 0;
+            $items['time'] = date("F j, Y", strtotime($items['created_at']));
+            $items['total_recipes'] = count($items->recipes);
+            unset($items['created_at']);
+            foreach($items->recipes as &$item){
+                if(count($item->rating) > 0){
+                    $result = Commons::sortRatings($item->rating);
+                    $count += $result['count'];
+                    $sum += $result['rating'];
+                }
+            }
+            if($count > 0){
+                $items['rate'] = ['count' => $count, 'rating' => $sum];
+            }
+            else{
+                $items['rate'] = ['count' => 0, 'rating' => 0];
+            }
+        }
+        $sorted = array_slice(Commons::sortThis($userModel->toarray()), 0, 5);
+        return $sorted;
+    }
     /* 
     |   Docu: For user validation and creation. 
     */
@@ -23,12 +59,10 @@ class Users extends Controller{
         $newModel = new UserPicture;
         $userDet = new UserAdditionalDetails;
         $validation = $request->validate($model->registrationValidation());
-
         $model->first_name = $request->input('first_name');
         $model->last_name = $request->input('last_name');
         $model->email = $request->input('email');
         $model->password = hash::make($request->input('password'));
-
         if($model->save()){
             $newModel->user_id = $model->id;
             $newModel->profile_url = asset('img\default-user.png');
@@ -41,6 +75,7 @@ class Users extends Controller{
             return redirect()->back()->with('registered', 'Saved! Please login');
         }
         return redirect()->back()->with('register_error', 'System busy, please try again later')->withInput();
+
     }
     /* 
     |   Docu: User login validation and auth
@@ -48,13 +83,12 @@ class Users extends Controller{
     public function loginUser(Request $request){
         $model = new User;
         $validation = $request->validate($model->loginValidation());
-
         $credentials = $request->only('email', 'password');
-        
         if(Auth::attempt($credentials)){
             return redirect()->back();
         }
         return redirect()->back()->with('login-error', "Incorrect credentials");
+
     }
     
     public function logoutUser(){
@@ -77,13 +111,12 @@ class Users extends Controller{
             'edit-email-modal' => 'email',
             'edit-aboutMe-modal' => 'aboutMe'
         ];
-
         foreach($selection as $key => $value){
-            if($key === $request->input('hidden')){
+            if($key === $request->input('hidden'))
+            {
                 $this->{$value}($row, $request);
             }
         }
-
         return redirect()->route('Main.profile', $userId);
     }
 

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Models\Comment;
 use App\Models\Rating;
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +18,7 @@ class Ajax extends Controller{
         )->select('id')->find($id);
         return view('reviewsAjax', ['comments' => $mainObject]);
     }
+
     /* 
     |   Docu: This method is used for getting the rating of a recipe using id
     */

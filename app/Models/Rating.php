@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Rating extends Model{
+
     use HasFactory;
-
+    
     protected $fillable = ['user_id', 'recipe_id', 'rating'];
-
     public static function validations(){
         return [
             'rating' => 'required',
         ];
     }
 
-    public function recipe() {
+    public function recipe(){
         return $this->belongsTo(Recipe::class); 
     }
 

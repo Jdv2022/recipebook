@@ -40,7 +40,6 @@ if(oldHidden === "main_sub_modal"){
 |   This is for sub-images in recipe/ passes the original url to the modal . this is important
 */
 $(".subs").click(function () {
-    console.log('dataSubValue')
     const dataSubValue = $(this).attr('data-sub');
     $('#hidden-sub-pics').attr('value', dataSubValue)
     $('#edit-sub-recipe-modal').modal('show');

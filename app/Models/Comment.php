@@ -4,19 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use App\Models\Reply;
 use App\Models\User;
 
 class Comment extends Model{
+
     use HasFactory;
 
     protected $fillable = ['user_id','recipe_id','content'];
 
-    public static function validation(){
-        return [
-            'content' => 'required',
-        ];
+    public static function createValidation(){
+        return ['content' => 'required',];
     }
 
     public function replies(){

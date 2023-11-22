@@ -16,12 +16,12 @@ class Recipe extends Model{
 
     public static function createRecipeValidation(){
         return [
-            'hidden' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'list_of_ingredients' => 'required',
-            'instructions' => 'required',
-            'profile_pic' => 'required|mimes:jpeg,png,jpg',
+            'hidden'                => 'required',
+            'title'                 => 'required',
+            'description'           => 'required',
+            'list_of_ingredients'   => 'required',
+            'instructions'          => 'required',
+            'profile_pic'           => 'required|mimes:jpeg,png,jpg',
         ];
     }
     

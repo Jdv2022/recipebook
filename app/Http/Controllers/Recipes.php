@@ -8,10 +8,50 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
 use App\Models\RecipeMoreInfo;
 use App\Models\RecipePicture;
-use App\Helpers\Commons;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Commons;
 
 class Recipes extends Controller{
+
+    public static function latestSection(){
+        $recipeModel = Recipe::
+            with([
+                    'user:id,first_name,last_name,email,updated_at',
+                    'rating:recipe_id,rating'
+            ])
+            ->select('id', 'user_id', 'title', 'description', 'url', 'updated_at')
+            ->latest()
+            ->take(8)
+            ->get();
+        foreach($recipeModel as &$item){
+            if(count($item->rating) > 0){
+                $item['rate'] = Commons::sortRatings($item->rating);
+            }
+            else{
+                $item['rate'] = ['count' => 0, 'rating' => 0];
+            }
+        }
+        return $recipeModel;
+    }
+    
+    public static function featuredRecipe(){
+        $unsorted;
+        $userModel = Recipe::with(
+            'rating:recipe_id,rating',
+            'user:id,first_name,last_name'
+            )
+            ->select(['id', 'user_id', 'title', 'description', 'url', 'created_at'])
+            ->get();
+        foreach($userModel as &$items){
+            if(count($items->rating) > 0){
+                $items['rate'] = Commons::sortRatings($items->rating);
+            }
+            else{
+                $items['rate'] = ['count' => 0, 'rating' => 0];
+            }
+        }
+        $sorted = array_slice(Commons::sortThis($userModel->toarray()), 0, 9);
+        return $sorted;
+    }
     
     public function createRecipes(Request $request){
         $request->validate(Recipe::createRecipeValidation());
@@ -19,14 +59,13 @@ class Recipes extends Controller{
         $uploadedFile->store('public/user'); 
         $url = 'storage/user/' . $uploadedFile->hashName();
         $request->merge([
-            'title' => ucwords($request->input('title')),
-            'description' => ucfirst($request->input('description')),
-            'user_id' => Auth::id(),
-            'url' => $url,
-        ]);
-
+                'title' => ucwords($request->input('title')),
+                'description' => ucfirst($request->input('description')),
+                'user_id' => Auth::id(),
+                'url' => $url,
+            ]
+        );
         $createResult = Recipe::create($request->all());
-
         if($createResult){
             $initMoreInfo = [
                 'recipe_id' => $createResult->id,
@@ -55,13 +94,11 @@ class Recipes extends Controller{
             'main_recipeImg_modal' => 'mainImg',
             'main_sub_modal' => 'subImg',
         ];
-
         foreach($selection as $key => $value){
             if($key === $request->input('hidden')){
                 $this->{$value}($row, $request, $id);
             }
         }
-
         return redirect()->route('Main.viewRecipe', $id);
     }
     /* 

@@ -8,11 +8,8 @@ use App\Models\User;
 
 class UserPicture extends Model{
     use HasFactory;
-
     protected $fillable = ['profile_url, cover_url']; 
-
     public function user(){
         return $this->belongsTo(User::class);
     }
-
 }

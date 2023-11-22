@@ -10,5 +10,4 @@ class RecipeMoreInfo extends Model{
 
     protected $fillable = ['recipe_id', 'duration', 'good_for', 'difficulty', 'budget'];
 
-
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class Reply extends Model{
+    
     use HasFactory;
 
     protected $fillable = ['user_id','comment_id','content'];
@@ -15,7 +16,7 @@ class Reply extends Model{
     public static function validations(){
         return [
             'comment_id' => 'required',
-            'content' => 'required',
+            'content'    => 'required',
         ];
     }
 

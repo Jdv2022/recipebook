@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class UserAdditionalDetails extends Model{
     use HasFactory;
 
-    
-
 }
