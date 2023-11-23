@@ -14,16 +14,24 @@ use Illuminate\Support\Facades\Storage;
 class Recipes extends Controller{
 
     public static function latestSection(){
-        $recipeModel = Recipe::
+        $total = Recipe::count();
+        $existedrand = [];
+        $index = 0;
+        while($index < 8){
+            $random = rand(1, $total);
+            if(!in_array($random, $existedrand)){
+                $existedrand[] = $random;
+                $index++;
+            }
+        }
+        $recipeModelGet = Recipe::
             with([
                     'user:id,first_name,last_name,email,updated_at',
                     'rating:recipe_id,rating'
             ])
             ->select('id', 'user_id', 'title', 'description', 'url', 'updated_at')
-            ->latest()
-            ->take(8)
-            ->get();
-        foreach($recipeModel as &$item){
+            ->find($existedrand);
+        foreach($recipeModelGet as &$item){
             if(count($item->rating) > 0){
                 $item['rate'] = Commons::sortRatings($item->rating);
             }
@@ -31,7 +39,7 @@ class Recipes extends Controller{
                 $item['rate'] = ['count' => 0, 'rating' => 0];
             }
         }
-        return $recipeModel;
+        return $recipeModelGet;
     }
     
     public static function featuredRecipe(){

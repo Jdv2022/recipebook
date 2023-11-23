@@ -42,7 +42,7 @@ class Users extends Controller{
                 }
             }
             if($count > 0){
-                $items['rate'] = ['count' => $count, 'rating' => $sum/$count];
+                $items['rate'] = ['count' => $count, 'rating' => $sum/$items['total_recipes']];
             }
             else{
                 $items['rate'] = ['count' => 0, 'rating' => 0];

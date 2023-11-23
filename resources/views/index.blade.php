@@ -5,7 +5,7 @@
 @section('content')
         <div id="custom-background-1" class="custom-container-height common_img pb-5 pt-3">
             <div class="container">
-                <h1 class="mb-5">Latest Recipes</h1>
+                <h1 class="mb-5">Recipes</h1>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
 @foreach($latest_section as $item)
                     <div class="col">
@@ -52,9 +52,9 @@
             <div class="container d-flex mb-3 rounded m-auto p-0">
 @if($count%2==0)
                 <div class="container custom-bg2-bgcolor-inner w-100">
-                    <h2>
+                    <h4>
                         <a class="text-decoration-none blue" href="{{ route('Main.profile', $item['id']) }}">{{ $item['first_name'] }}  {{ $item['last_name'] }}</a>
-                    </h2>
+                    </h4>
                     <p class="about-me">{{ $item['more_user_info']['about_me'] }}</p>
                     <div class="card-footer border border-0">
                     <small class="text-black d-block">Total recipes contributed: {{ $item['total_recipes'] }}</small>
@@ -78,7 +78,7 @@
                     </a>
                 </div>
                 <div class="container custom-bg2-bgcolor-inner w-100">
-                    <h2><a class="text-decoration-none blue" href="{{ route('Main.profile', $item['id']) }}">{{ $item['first_name'] }}  {{ $item['last_name'] }}</a></h2>
+                    <h4><a class="text-decoration-none blue" href="{{ route('Main.profile', $item['id']) }}">{{ $item['first_name'] }}  {{ $item['last_name'] }}</a></h4>
                     <p class="about-me">{{ $item['more_user_info']['about_me'] }}</p>
                     <div class="card-footer border border-0">
                         <small class="text-black d-block">Total recipes contributed: {{ $item['total_recipes'] }}</small>
