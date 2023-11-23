@@ -33,7 +33,14 @@
     <body>
         <nav class="navbar navbar-expand-lg position-sticky top-0 sticky-top custom-nav-color" style="">
             <div class="container-fluid">
-                <a class="navbar-brand text-bold" href="{{ route('Main.index') }}">Recipe Book</a>
+                <a class="navbar-brand text-bold" href="{{ route('Main.index') }}">
+                    Recipe Book
+                    <p class="text-light d-inline">
+                    @if (auth()->check())
+                        of {{ auth()->user()->first_name }}
+                    @endif
+                    </p>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

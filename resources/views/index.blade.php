@@ -3,7 +3,7 @@
 @section('title', 'Recipe Book')
 
 @section('content')
-        <div id="custom-background-1" class="custom-container-height common_img">
+        <div id="custom-background-1" class="custom-container-height common_img pb-5 pt-3">
             <div class="container">
                 <h1 class="mb-5">Latest Recipes</h1>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div id="custom-background-2" class="custom-container-height common_img pt-5 pb-5">
+        <div id="custom-background-2" class="custom-container-height common_img pb-5 pt-3 pt-5 pb-5">
         <div class="container p-0">
             <h1>Featured Users</h1>
 @php
@@ -98,7 +98,7 @@
 @endforeach
         </div>
     </div>
-    <div id="custom-background-3" class="custom-container-height common_img pt-5 pb-5">
+    <div id="custom-background-3" class="custom-container-height common_img pb-5 pt-3 pt-5 pb-5">
         <div class="container">
             <h1>Featured Recipes</h1>
             <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
