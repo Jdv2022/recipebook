@@ -28,3 +28,9 @@ Can share your own and see other peoples food recipes.
 - HTML
 - PHP LARAVEL (Fullstack)
 - MYSQL (DB)
+
+## Pendings
+
+- Image optimization (Causes high loading time and bandwidth)
+- Comment/Replies (Delete/Edit feature)
+- Store uploaded Images somewhere else
